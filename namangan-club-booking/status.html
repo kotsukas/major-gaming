@@ -370,10 +370,8 @@
             results.classList.remove('show');
             submitBtn.disabled = true;
             
-            // Ищем брони по телефону
+            // Ищем брони по телефону (без индекса - загружаем все и фильтруем)
             db.collection('bookings')
-                .where('phone', '==', phone)
-                .orderBy('id', 'desc')
                 .get()
                 .then(function(snapshot) {
                     loading.classList.remove('show');
@@ -381,8 +379,13 @@
                     
                     const bookings = [];
                     snapshot.forEach(function(doc) {
-                        bookings.push(doc.data());
+                        const data = doc.data();
+                        if (data.phone === phone) {
+                            bookings.push(data);
+                        }
                     });
+                    // Сортируем по id (новые первые)
+                    bookings.sort((a, b) => b.id - a.id);
                     
                     if (bookings.length === 0) {
                         bookingsList.innerHTML = `
