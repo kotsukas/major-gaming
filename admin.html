@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Панель управления</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #f1f5f9;
+            --bg-card: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        
+        /* Login Screen */
+        .login-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .login-box {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 360px;
+        }
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+        .login-box p {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        .login-box .form-group {
+            margin-bottom: 1rem;
+        }
+        .login-box label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .login-box input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .login-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 0.875rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+        .login-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+            display: none;
+            font-size: 0.9rem;
+        }
+        
+        /* Admin Panel */
+        .admin-panel { display: none; padding: 2rem; }
+        .admin-panel.active { display: block; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .logo i { color: var(--primary); }
+        .header-actions { display: flex; gap: 0.75rem; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+        .btn-outline {
+            background: var(--bg-card);
+            color: var(--text);
+            border: 2px solid var(--border);
+        }
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+        .btn:hover { transform: translateY(-2px); }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: var(--bg-card);
+            padding: 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .stat-card .icon {
+            width: 45px; height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+        }
+        .stat-card .icon.purple { background: rgba(139, 92, 246, 0.1); color: var(--primary); }
+        .stat-card .icon.yellow { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+        .stat-card .icon.green { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .stat-card .number { font-size: 1.75rem; font-weight: 700; }
+        .stat-card .label { color: var(--text-muted); font-size: 0.85rem; }
+        
+        .table-container {
+            background: var(--bg-card);
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .table-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .table-header h2 { font-size: 1.1rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.875rem 1.25rem; text-align: left; border-bottom: 1px solid var(--border); }
+        th {
+            background: var(--bg);
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        .status {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .status.pending { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+        .status.confirmed { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .status.cancelled { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+        .actions { display: flex; gap: 0.4rem; }
+        .action-btn {
+            width: 28px; height: 28px;
+            border: none; border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-size: 0.8rem;
+        }
+        .action-btn.confirm { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .action-btn.cancel { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+        .action-btn.delete { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+        .action-btn:hover { transform: scale(1.1); }
+        .empty-state { text-align: center; padding: 2.5rem; color: var(--text-muted); }
+        .empty-state i { font-size: 2.5rem; margin-bottom: 0.75rem; opacity: 0.5; }
+        
+        @media (max-width: 768px) {
+            .admin-panel { padding: 1rem; }
+            .table-container { overflow-x: auto; }
+            table { min-width: 550px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <h2>🔐 Вход</h2>
+            <p>Введите данные для доступа</p>
+            <div class="login-error" id="loginError">Неверный логин или пароль</div>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Логин</label>
+                    <input type="text" id="loginUsername" required placeholder="Введите логин">
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" id="loginPassword" required placeholder="Введите пароль">
+                </div>
+                <button type="submit" class="login-btn">Войти</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="container">
+            <div class="header">
+                <div class="logo">
+                    <i class="fas fa-gamepad"></i>
+                    Major Gaming
+                </div>
+                <div class="header-actions">
+                    <a href="index.html" class="btn btn-outline"><i class="fas fa-globe"></i> Сайт</a>
+                    <button class="btn btn-danger" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="icon purple"><i class="fas fa-calendar-check"></i></div>
+                    <div class="number" id="totalCount">0</div>
+                    <div class="label">Всего заявок</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon yellow"><i class="fas fa-clock"></i></div>
+                    <div class="number" id="pendingCount">0</div>
+                    <div class="label">Ожидают</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon green"><i class="fas fa-check-circle"></i></div>
+                    <div class="number" id="confirmedCount">0</div>
+                    <div class="label">Подтверждено</div>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <div class="table-header">
+                    <h2>Бронирования</h2>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Клиент</th>
+                            <th>Телефон</th>
+                            <th>Дата/Время</th>
+                            <th>ПК</th>
+                            <th>Тариф</th>
+                            <th>Комментарий</th>
+                            <th>Статус</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script>
+        // Firebase конфигурация
+        const firebaseConfig = {
+            apiKey: "AIzaSyDVO0HWDUQfVFLHmqIE2ifIOrdxKrPDPbo",
+            authDomain: "major-gaming.firebaseapp.com",
+            projectId: "major-gaming",
+            storageBucket: "major-gaming.firebasestorage.app",
+            messagingSenderId: "602576348146",
+            appId: "1:602576348146:web:fcf160f7d412d5f23bc16b"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        // Логин и пароль
+        const ADMIN_LOGIN = 'admin';
+        const ADMIN_PASSWORD = 'major2025';
+        
+        // Проверка авторизации при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            if (sessionStorage.getItem('admin_logged_in') === 'true') {
+                showAdminPanel();
+            }
+        });
+        
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (username === ADMIN_LOGIN && password === ADMIN_PASSWORD) {
+                sessionStorage.setItem('admin_logged_in', 'true');
+                showAdminPanel();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+        
+        function showAdminPanel() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('adminPanel').classList.add('active');
+            loadBookings();
+        }
+        
+        function logout() {
+            sessionStorage.removeItem('admin_logged_in');
+            location.reload();
+        }
+        
+        var unsubscribe = null;
+        
+        function loadBookings() {
+            const tbody = document.getElementById('bookingsTable');
+            tbody.innerHTML = '<tr><td colspan="9"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Загрузка...</p></div></td></tr>';
+            
+            // Отписываемся от предыдущего listener если есть
+            if (unsubscribe) unsubscribe();
+            
+            // Realtime listener - автоматически обновляется при новых бронях
+            unsubscribe = db.collection('bookings').orderBy('id', 'desc')
+                .onSnapshot(function(snapshot) {
+                    const bookings = [];
+                    snapshot.forEach(function(doc) {
+                        bookings.push({ ...doc.data(), docId: doc.id });
+                    });
+                    renderBookings(bookings);
+                    
+                    // Звук уведомления при новой брони
+                    if (snapshot.docChanges().some(change => change.type === 'added')) {
+                        playNotificationSound();
+                    }
+                }, function(error) {
+                    console.log('Firebase error:', error);
+                    const bookings = JSON.parse(localStorage.getItem('majorgaming_bookings') || '[]');
+                    renderBookings(bookings);
+                });
+        }
+        
+        function playNotificationSound() {
+            try {
+                var audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdH2Onp+ZjHdwa3eCkqGknpF+cGtxgI+eoJuPgHRtcX6Lmp+dlYl7cW93hJOdnpqRhHhxdHuIlZudmZKGe3N1eYWSlpqYlIqAd3V4gY2VmJeUjoR7d3h9iJGVlpSRiYF6eHqBi5GUlJKPiYN8eXp+hoyRkpGPi4Z/e3p8gYmOkJCOjIiDfnt7fYSJjI6NjIqGgn17fH6EiIuMi4qIhYF+fH1+g4eJioqJh4WCf31+f4KGiImJiIaEgn9+fn+ChYeIiIeGhIKAf39/gYSGh4eGhYOBgH9/gIGEhYaGhYSDgYB/f4CBg4WFhYWEg4GAgH+AgYOEhYWEg4KBgIB/gIGCg4SEhIOCgYCAf4CAgYKDg4OCgoGAgH+AgIGCg4ODgoKBgIB/gICBgoKDg4KCgYGAf4CAgYGCgoKCgoGBgIB/gICBgYKCgoKBgYGAf4CAgIGBgoKCgYGBgIB/gICAgYGBgYGBgYGAf4CAgICBgYGBgYGBgIB/gICAgYGBgYGBgYCAf4CAgICBgYGBgYGAgH+AgICAgYGBgYGBgIB/gICAgIGBgYGBgYCAf4CAgICAgYGBgYGAgH+AgICAgIGBgYGBgIB/gICAgICBgYGBgYCAf4CAgICAgYGBgYGAgH+AgICAgICBgYGBgIB/gICAgICAgYGBgYCAf4CAgICAgIGBgYGAgH+AgICAgICBgYGBgIB/gICAgICAgYGBgYCAf4CAgICAgICBgYGAgH+AgICAgICAgYGBgIB/gICAgICAgIGBgYCAf4CAgICAgICBgYGAgH+AgICAgICAgYGBgIB/gICAgICAgIGBgYCAf4CAgICAgICAgYGAgH+AgICAgICAgIGBgIB/gICAgICAgICBgYCAf4CAgICAgICAgYGAgH+AgICAgICAgICBgIB/gICAgICAgICAgYCAf4CAgICAgICAgIGAgH+AgICAgICAgICAgIB/gICAgICAgICAgICAf4CAgICAgICAgICAgH+AgICAgICAgICAgIB/gICAgICAgICAgICAf4CAgICAgICAgICAgH+AgICAgICAgICAgIB/gICAgICAgICAgICAfw==');
+                audio.volume = 0.5;
+                audio.play();
+            } catch(e) {}
+        }
+        
+        function renderBookings(bookings) {
+            const tbody = document.getElementById('bookingsTable');
+            
+            document.getElementById('totalCount').textContent = bookings.length;
+            document.getElementById('pendingCount').textContent = bookings.filter(b => b.status === 'pending').length;
+            document.getElementById('confirmedCount').textContent = bookings.filter(b => b.status === 'confirmed').length;
+            
+            if (bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9"><div class="empty-state"><i class="fas fa-inbox"></i><p>Бронирований пока нет</p></div></td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = bookings.map((b, index) => {
+                const date = new Date(b.datetime);
+                const formattedDate = date.toLocaleDateString('ru-RU') + ' ' + date.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
+                const statusText = { 'pending': 'Ожидает', 'confirmed': 'Подтверждено', 'cancelled': 'Отменено' };
+                const docId = b.docId || b.id;
+                const bookingNumber = bookings.length - index;
+                
+                return `<tr>
+                    <td>#${bookingNumber}</td>
+                    <td>${b.name}</td>
+                    <td><a href="tel:${b.phone}">${b.phone}</a></td>
+                    <td>${formattedDate}</td>
+                    <td>${b.pcs || 1}</td>
+                    <td>${b.tariff}</td>
+                    <td>${b.comment || '—'}</td>
+                    <td><span class="status ${b.status}">${statusText[b.status] || b.status}</span></td>
+                    <td><div class="actions">
+                        ${b.status === 'pending' ? `
+                            <button class="action-btn confirm" onclick="updateStatus('${docId}', 'confirmed')" title="Подтвердить"><i class="fas fa-check"></i></button>
+                            <button class="action-btn cancel" onclick="updateStatus('${docId}', 'cancelled')" title="Отменить"><i class="fas fa-times"></i></button>
+                        ` : ''}
+                        <button class="action-btn delete" onclick="deleteBooking('${docId}')" title="Удалить"><i class="fas fa-trash"></i></button>
+                    </div></td>
+                </tr>`;
+            }).join('');
+        }
+        
+        function updateStatus(docId, status) {
+            db.collection('bookings').doc(docId).update({ status: status })
+                .then(function() {
+                    loadBookings();
+                })
+                .catch(function(error) {
+                    console.log('Error:', error);
+                    alert('Ошибка обновления');
+                });
+        }
+        
+        function deleteBooking(docId) {
+            if (!confirm('Удалить?')) return;
+            db.collection('bookings').doc(docId).delete()
+                .then(function() {
+                    loadBookings();
+                })
+                .catch(function(error) {
+                    console.log('Error:', error);
+                    alert('Ошибка удаления');
+                });
+        }
+    </script>
+</body>
+</html>
