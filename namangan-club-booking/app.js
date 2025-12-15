@@ -304,10 +304,11 @@ function showSuccessModal(booking, formattedDate) {
                 '<p><strong>Тариф:</strong> ' + booking.tariff + '</p>' +
             '</div>' +
             '<button class="btn btn-primary" onclick="closeModal()">Отлично!</button>' +
+            '<a href="status.html" class="modal-status-link">🔍 Проверить статус брони</a>' +
         '</div>';
     
     const style = document.createElement('style');
-    style.textContent = '#successModal{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:1rem}.modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(5px)}.modal-content{position:relative;background:var(--bg-card,#fff);padding:2.5rem;border-radius:20px;text-align:center;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:modalIn 0.3s ease}@keyframes modalIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}.modal-icon{font-size:4rem;margin-bottom:1rem}.modal-content h2{margin-bottom:0.5rem}.modal-content>p{color:#64748b;margin-bottom:1.5rem}.modal-details{background:var(--bg,#f8fafc);padding:1rem;border-radius:12px;margin-bottom:1.5rem;text-align:left}.modal-details p{margin:0.5rem 0}';
+    style.textContent = '#successModal{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:1rem}.modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(5px)}.modal-content{position:relative;background:var(--bg-card,#fff);padding:2.5rem;border-radius:20px;text-align:center;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:modalIn 0.3s ease}@keyframes modalIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}.modal-icon{font-size:4rem;margin-bottom:1rem}.modal-content h2{margin-bottom:0.5rem}.modal-content>p{color:#64748b;margin-bottom:1.5rem}.modal-details{background:var(--bg,#f8fafc);padding:1rem;border-radius:12px;margin-bottom:1.5rem;text-align:left}.modal-details p{margin:0.5rem 0}.modal-status-link{display:block;margin-top:1rem;color:#8b5cf6;text-decoration:none;font-size:0.9rem}.modal-status-link:hover{text-decoration:underline}';
     document.head.appendChild(style);
     document.body.appendChild(modal);
 }

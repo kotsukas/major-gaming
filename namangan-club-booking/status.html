@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Проверить статус брони - Major Gaming</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            --bg-card: rgba(255,255,255,0.05);
+            --text: #ffffff;
+            --text-muted: #94a3b8;
+            --border: rgba(255,255,255,0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .logo a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+        }
+        .logo i {
+            background: linear-gradient(135deg, var(--primary), #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .card-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .card-header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .card-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        .input-wrapper {
+            position: relative;
+        }
+        .input-wrapper i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+        .form-group input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(139, 92, 246, 0.1);
+        }
+        .form-group input::placeholder {
+            color: var(--text-muted);
+        }
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Results */
+        .results {
+            margin-top: 2rem;
+            display: none;
+        }
+        .results.show { display: block; }
+        .results-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .results-header h3 {
+            font-size: 1.1rem;
+        }
+        .booking-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+        .booking-card:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .booking-id {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .status {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .status.pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+        .status.confirmed {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+        .status.cancelled {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+        .booking-details {
+            display: grid;
+            gap: 0.75rem;
+        }
+        .booking-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .booking-row .label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .booking-row .value {
+            font-weight: 500;
+        }
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+        }
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .back-link a {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+        .back-link a:hover {
+            color: var(--primary);
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .booking-card {
+            animation: fadeIn 0.3s ease forwards;
+        }
+        .booking-card:nth-child(2) { animation-delay: 0.1s; }
+        .booking-card:nth-child(3) { animation-delay: 0.2s; }
+        
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        .loading.show { display: block; }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <a href="index.html">
+                <i class="fas fa-gamepad"></i>
+                <span>Major Gaming</span>
+            </a>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h1>🔍 Проверить статус брони</h1>
+                <p>Введите номер телефона, указанный при бронировании</p>
+            </div>
+            
+            <form id="checkForm" onsubmit="checkStatus(event)">
+                <div class="form-group">
+                    <label>Номер телефона</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" id="phoneInput" placeholder="+998 XX XXX XX XX" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn" id="submitBtn">
+                    <i class="fas fa-search"></i>
+                    Найти мои брони
+                </button>
+            </form>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Ищем ваши бронирования...</p>
+            </div>
+            
+            <div class="results" id="results">
+                <div class="results-header">
+                    <i class="fas fa-list"></i>
+                    <h3>Ваши бронирования</h3>
+                </div>
+                <div id="bookingsList"></div>
+            </div>
+        </div>
+        
+        <div class="back-link">
+            <a href="index.html">
+                <i class="fas fa-arrow-left"></i>
+                Вернуться на главную
+            </a>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDVO0HWDUQfVFLHmqIE2ifIOrdxKrPDPbo",
+            authDomain: "major-gaming.firebaseapp.com",
+            projectId: "major-gaming",
+            storageBucket: "major-gaming.firebasestorage.app",
+            messagingSenderId: "602576348146",
+            appId: "1:602576348146:web:fcf160f7d412d5f23bc16b"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        // Маска телефона
+        document.getElementById('phoneInput').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0 && !value.startsWith('998')) {
+                value = '998' + value;
+            }
+            if (value.length > 12) value = value.slice(0, 12);
+            
+            let formatted = '';
+            if (value.length > 0) formatted = '+' + value.slice(0, 3);
+            if (value.length > 3) formatted += ' ' + value.slice(3, 5);
+            if (value.length > 5) formatted += ' ' + value.slice(5, 8);
+            if (value.length > 8) formatted += ' ' + value.slice(8, 10);
+            if (value.length > 10) formatted += ' ' + value.slice(10, 12);
+            e.target.value = formatted;
+        });
+        
+        function checkStatus(e) {
+            e.preventDefault();
+            
+            const phone = document.getElementById('phoneInput').value.trim();
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            const bookingsList = document.getElementById('bookingsList');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (phone.replace(/\D/g, '').length < 12) {
+                alert('Введите полный номер телефона');
+                return;
+            }
+            
+            // Показываем загрузку
+            loading.classList.add('show');
+            results.classList.remove('show');
+            submitBtn.disabled = true;
+            
+            // Ищем брони по телефону
+            db.collection('bookings')
+                .where('phone', '==', phone)
+                .orderBy('id', 'desc')
+                .get()
+                .then(function(snapshot) {
+                    loading.classList.remove('show');
+                    submitBtn.disabled = false;
+                    
+                    const bookings = [];
+                    snapshot.forEach(function(doc) {
+                        bookings.push(doc.data());
+                    });
+                    
+                    if (bookings.length === 0) {
+                        bookingsList.innerHTML = `
+                            <div class="no-results">
+                                <i class="fas fa-inbox"></i>
+                                <p>Бронирований не найдено</p>
+                                <p style="font-size: 0.85rem; margin-top: 0.5rem;">Проверьте правильность номера телефона</p>
+                            </div>
+                        `;
+                    } else {
+                        bookingsList.innerHTML = bookings.map((b, i) => {
+                            const date = new Date(b.datetime);
+                            const formattedDate = date.toLocaleDateString('ru-RU', {day: 'numeric', month: 'long', year: 'numeric'});
+                            const formattedTime = date.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
+                            const statusText = {
+                                'pending': '⏳ Ожидает подтверждения',
+                                'confirmed': '✅ Подтверждено',
+                                'cancelled': '❌ Отменено'
+                            };
+                            
+                            return `
+                                <div class="booking-card">
+                                    <div class="booking-header">
+                                        <span class="booking-id">Бронь #${bookings.length - i}</span>
+                                        <span class="status ${b.status}">${statusText[b.status] || b.status}</span>
+                                    </div>
+                                    <div class="booking-details">
+                                        <div class="booking-row">
+                                            <span class="label">📅 Дата</span>
+                                            <span class="value">${formattedDate}</span>
+                                        </div>
+                                        <div class="booking-row">
+                                            <span class="label">🕐 Время</span>
+                                            <span class="value">${formattedTime}</span>
+                                        </div>
+                                        <div class="booking-row">
+                                            <span class="label">🖥 Компьютеров</span>
+                                            <span class="value">${b.pcs || 1} шт.</span>
+                                        </div>
+                                        <div class="booking-row">
+                                            <span class="label">💎 Тариф</span>
+                                            <span class="value">${b.tariff}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
+                    }
+                    
+                    results.classList.add('show');
+                })
+                .catch(function(error) {
+                    console.log('Error:', error);
+                    loading.classList.remove('show');
+                    submitBtn.disabled = false;
+                    alert('Ошибка поиска. Попробуйте позже.');
+                });
+        }
+    </script>
+</body>
+</html>

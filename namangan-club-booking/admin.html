@@ -301,6 +301,7 @@
                             <th>Дата/Время</th>
                             <th>ПК</th>
                             <th>Тариф</th>
+                            <th>Комментарий</th>
                             <th>Статус</th>
                             <th>Действия</th>
                         </tr>
@@ -362,25 +363,41 @@
             location.reload();
         }
         
+        var unsubscribe = null;
+        
         function loadBookings() {
             const tbody = document.getElementById('bookingsTable');
-            tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Загрузка...</p></div></td></tr>';
+            tbody.innerHTML = '<tr><td colspan="9"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Загрузка...</p></div></td></tr>';
             
-            // Загружаем из Firebase
-            db.collection('bookings').orderBy('id', 'desc').get()
-                .then(function(snapshot) {
+            // Отписываемся от предыдущего listener если есть
+            if (unsubscribe) unsubscribe();
+            
+            // Realtime listener - автоматически обновляется при новых бронях
+            unsubscribe = db.collection('bookings').orderBy('id', 'desc')
+                .onSnapshot(function(snapshot) {
                     const bookings = [];
                     snapshot.forEach(function(doc) {
                         bookings.push({ ...doc.data(), docId: doc.id });
                     });
                     renderBookings(bookings);
-                })
-                .catch(function(error) {
+                    
+                    // Звук уведомления при новой брони
+                    if (snapshot.docChanges().some(change => change.type === 'added')) {
+                        playNotificationSound();
+                    }
+                }, function(error) {
                     console.log('Firebase error:', error);
-                    // Fallback на localStorage
                     const bookings = JSON.parse(localStorage.getItem('majorgaming_bookings') || '[]');
                     renderBookings(bookings);
                 });
+        }
+        
+        function playNotificationSound() {
+            try {
+                var audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdH2Onp+ZjHdwa3eCkqGknpF+cGtxgI+eoJuPgHRtcX6Lmp+dlYl7cW93hJOdnpqRhHhxdHuIlZudmZKGe3N1eYWSlpqYlIqAd3V4gY2VmJeUjoR7d3h9iJGVlpSRiYF6eHqBi5GUlJKPiYN8eXp+hoyRkpGPi4Z/e3p8gYmOkJCOjIiDfnt7fYSJjI6NjIqGgn17fH6EiIuMi4qIhYF+fH1+g4eJioqJh4WCf31+f4KGiImJiIaEgn9+fn+ChYeIiIeGhIKAf39/gYSGh4eGhYOBgH9/gIGEhYaGhYSDgYB/f4CBg4WFhYWEg4GAgH+AgYOEhYWEg4KBgIB/gIGCg4SEhIOCgYCAf4CAgYKDg4OCgoGAgH+AgIGCg4ODgoKBgIB/gICBgoKDg4KCgYGAf4CAgYGCgoKCgoGBgIB/gICBgYKCgoKBgYGAf4CAgIGBgoKCgYGBgIB/gICAgYGBgYGBgYGAf4CAgICBgYGBgYGBgIB/gICAgYGBgYGBgYCAf4CAgICBgYGBgYGAgH+AgICAgYGBgYGBgIB/gICAgIGBgYGBgYCAf4CAgICAgYGBgYGAgH+AgICAgIGBgYGBgIB/gICAgICBgYGBgYCAf4CAgICAgYGBgYGAgH+AgICAgICBgYGBgIB/gICAgICAgYGBgYCAf4CAgICAgIGBgYGAgH+AgICAgICBgYGBgIB/gICAgICAgYGBgYCAf4CAgICAgICBgYGAgH+AgICAgICAgYGBgIB/gICAgICAgIGBgYCAf4CAgICAgICBgYGAgH+AgICAgICAgYGBgIB/gICAgICAgIGBgYCAf4CAgICAgICAgYGAgH+AgICAgICAgIGBgIB/gICAgICAgICBgYCAf4CAgICAgICAgYGAgH+AgICAgICAgICBgIB/gICAgICAgICAgYCAf4CAgICAgICAgIGAgH+AgICAgICAgICAgIB/gICAgICAgICAgICAf4CAgICAgICAgICAgH+AgICAgICAgICAgIB/gICAgICAgICAgICAf4CAgICAgICAgICAgH+AgICAgICAgICAgIB/gICAgICAgICAgICAfw==');
+                audio.volume = 0.5;
+                audio.play();
+            } catch(e) {}
         }
         
         function renderBookings(bookings) {
@@ -391,23 +408,25 @@
             document.getElementById('confirmedCount').textContent = bookings.filter(b => b.status === 'confirmed').length;
             
             if (bookings.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><i class="fas fa-inbox"></i><p>Бронирований пока нет</p></div></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="9"><div class="empty-state"><i class="fas fa-inbox"></i><p>Бронирований пока нет</p></div></td></tr>';
                 return;
             }
             
-            tbody.innerHTML = bookings.map(b => {
+            tbody.innerHTML = bookings.map((b, index) => {
                 const date = new Date(b.datetime);
                 const formattedDate = date.toLocaleDateString('ru-RU') + ' ' + date.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
                 const statusText = { 'pending': 'Ожидает', 'confirmed': 'Подтверждено', 'cancelled': 'Отменено' };
                 const docId = b.docId || b.id;
+                const bookingNumber = bookings.length - index;
                 
                 return `<tr>
-                    <td>#${b.id.toString().slice(-4)}</td>
+                    <td>#${bookingNumber}</td>
                     <td>${b.name}</td>
                     <td><a href="tel:${b.phone}">${b.phone}</a></td>
                     <td>${formattedDate}</td>
                     <td>${b.pcs || 1}</td>
                     <td>${b.tariff}</td>
+                    <td>${b.comment || '—'}</td>
                     <td><span class="status ${b.status}">${statusText[b.status] || b.status}</span></td>
                     <td><div class="actions">
                         ${b.status === 'pending' ? `
