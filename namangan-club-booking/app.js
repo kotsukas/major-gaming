@@ -527,3 +527,78 @@ function updateTotalPrice() {
 function formatPrice(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 }
+
+
+// ===== Scroll Animations =====
+function initScrollAnimations() {
+    const elements = document.querySelectorAll('.feature-card, .price-card, .tournament-card, .review-card, .gallery-item');
+    
+    elements.forEach(function(el) {
+        el.classList.add('animate-on-scroll');
+    });
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animated');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    elements.forEach(function(el) {
+        observer.observe(el);
+    });
+}
+
+// ===== Live Stats Updates =====
+function initLiveStats() {
+    updateLiveStats();
+    setInterval(updateLiveStats, 30000); // Update every 30 seconds
+}
+
+function updateLiveStats() {
+    const freeSeats = document.getElementById('freeSeats');
+    const todayBookings = document.getElementById('todayBookings');
+    const onlineNow = document.getElementById('onlineNow');
+    
+    // Simulate real-time data (replace with actual API calls)
+    if (freeSeats) {
+        const free = 35 + Math.floor(Math.random() * 15);
+        animateNumber(freeSeats, parseInt(freeSeats.textContent), free);
+    }
+    
+    if (todayBookings) {
+        const bookings = 8 + Math.floor(Math.random() * 10);
+        animateNumber(todayBookings, parseInt(todayBookings.textContent), bookings);
+    }
+    
+    if (onlineNow) {
+        const online = 5 + Math.floor(Math.random() * 12);
+        animateNumber(onlineNow, parseInt(onlineNow.textContent), online);
+    }
+}
+
+function animateNumber(element, from, to) {
+    const duration = 1000;
+    const start = performance.now();
+    
+    function update(currentTime) {
+        const elapsed = currentTime - start;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        const current = Math.floor(from + (to - from) * progress);
+        element.textContent = current;
+        
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        }
+    }
+    
+    requestAnimationFrame(update);
+}
+
+// Initialize new features
+document.addEventListener('DOMContentLoaded', function() {
+    initScrollAnimations();
+    initLiveStats();
+});

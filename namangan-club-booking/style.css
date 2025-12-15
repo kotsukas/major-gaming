@@ -1167,3 +1167,375 @@ body {
 .total-discount.show {
     display: block;
 }
+
+
+/* ===== Live Stats Section ===== */
+.live-stats {
+    padding: 2rem 0;
+    background: var(--bg-card);
+}
+
+.live-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.live-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--bg);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    position: relative;
+    overflow: hidden;
+}
+
+.live-stat-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--gradient);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.live-stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.live-stat-num {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.live-stat-label {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.live-indicator {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 12px;
+    height: 12px;
+    background: var(--success);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+/* ===== Tournaments Section ===== */
+.tournaments {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(6, 182, 212, 0.05));
+}
+
+.tournaments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.tournament-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    position: relative;
+    transition: var(--transition);
+}
+
+.tournament-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.tournament-card.upcoming {
+    border: 2px solid var(--primary);
+}
+
+.tournament-badge {
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    background: var(--gradient);
+    color: white;
+    padding: 0.25rem 1rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.tournament-game {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.tournament-game i {
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.tournament-game span {
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.tournament-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.tournament-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.tournament-info > div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+}
+
+.tournament-info i {
+    width: 20px;
+    color: var(--primary);
+}
+
+.tournament-prize span {
+    color: var(--accent) !important;
+    font-weight: 600;
+}
+
+/* ===== Reviews Section ===== */
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.review-card {
+    background: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.review-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.review-avatar {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.review-name {
+    font-weight: 600;
+    display: block;
+}
+
+.review-stars {
+    color: var(--accent);
+    font-size: 0.85rem;
+}
+
+.review-text {
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.review-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+/* ===== Loyalty Section ===== */
+.loyalty-card {
+    background: var(--gradient);
+    border-radius: var(--radius);
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.loyalty-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.loyalty-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: white;
+}
+
+.loyalty-info {
+    color: white;
+}
+
+.loyalty-info h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.loyalty-info p {
+    opacity: 0.9;
+    margin-bottom: 1rem;
+}
+
+.loyalty-benefits {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.loyalty-benefits li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.loyalty-cta .btn {
+    background: white;
+    color: var(--primary);
+}
+
+.loyalty-cta .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* ===== Telegram Widget ===== */
+.telegram-widget {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: #0088cc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.75rem;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(0, 136, 204, 0.4);
+    z-index: 1000;
+    transition: var(--transition);
+}
+
+.telegram-widget:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(0, 136, 204, 0.5);
+}
+
+.telegram-tooltip {
+    position: absolute;
+    right: 70px;
+    background: var(--bg-card);
+    color: var(--text);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transform: translateX(10px);
+    transition: var(--transition);
+    pointer-events: none;
+}
+
+.telegram-widget:hover .telegram-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ===== Scroll Animations ===== */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-on-scroll.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .loyalty-card {
+        padding: 2rem;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .loyalty-content {
+        flex-direction: column;
+    }
+    
+    .loyalty-benefits {
+        grid-template-columns: 1fr;
+    }
+    
+    .telegram-widget {
+        bottom: 20px;
+        right: 20px;
+        width: 55px;
+        height: 55px;
+    }
+    
+    .telegram-tooltip {
+        display: none;
+    }
+}

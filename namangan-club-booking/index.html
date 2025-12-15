@@ -25,7 +25,7 @@
                 <a href="#home" class="nav-link">Главная</a>
                 <a href="#about" class="nav-link">О нас</a>
                 <a href="#pricing" class="nav-link">Цены</a>
-                <a href="#gallery" class="nav-link">Галерея</a>
+                <a href="#tournaments" class="nav-link">Турниры</a>
                 <a href="#booking" class="nav-link">Бронирование</a>
                 <a href="#contact" class="nav-link">Контакты</a>
                 <a href="status.html" class="nav-link">Статус брони</a>
@@ -202,6 +202,117 @@
         </div>
     </section>
 
+    <!-- Счётчик свободных мест -->
+    <section class="section live-stats">
+        <div class="container">
+            <div class="live-stats-grid">
+                <div class="live-stat-card">
+                    <div class="live-stat-icon"><i class="fas fa-desktop"></i></div>
+                    <div class="live-stat-info">
+                        <span class="live-stat-num" id="freeSeats">42</span>
+                        <span class="live-stat-label">Свободных мест</span>
+                    </div>
+                    <div class="live-indicator"></div>
+                </div>
+                <div class="live-stat-card">
+                    <div class="live-stat-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="live-stat-info">
+                        <span class="live-stat-num" id="todayBookings">12</span>
+                        <span class="live-stat-label">Забронировано сегодня</span>
+                    </div>
+                </div>
+                <div class="live-stat-card">
+                    <div class="live-stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="live-stat-info">
+                        <span class="live-stat-num" id="onlineNow">8</span>
+                        <span class="live-stat-label">Играют сейчас</span>
+                    </div>
+                    <div class="live-indicator"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Турниры -->
+    <section class="section tournaments" id="tournaments">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">🏆 Турниры</span>
+                <h2>Киберспортивные события</h2>
+                <p>Участвуй в турнирах и выигрывай призы!</p>
+            </div>
+            <div class="tournaments-grid">
+                <div class="tournament-card upcoming">
+                    <div class="tournament-badge">Скоро</div>
+                    <div class="tournament-game">
+                        <i class="fas fa-crosshairs"></i>
+                        <span>CS2</span>
+                    </div>
+                    <h3>Major Cup #5</h3>
+                    <div class="tournament-info">
+                        <div class="tournament-date">
+                            <i class="fas fa-calendar"></i>
+                            <span>21 декабря, 18:00</span>
+                        </div>
+                        <div class="tournament-prize">
+                            <i class="fas fa-trophy"></i>
+                            <span>500 000 сум</span>
+                        </div>
+                        <div class="tournament-slots">
+                            <i class="fas fa-users"></i>
+                            <span>12/16 команд</span>
+                        </div>
+                    </div>
+                    <a href="#booking" class="btn btn-primary btn-block">Участвовать</a>
+                </div>
+                <div class="tournament-card">
+                    <div class="tournament-game">
+                        <i class="fas fa-bolt"></i>
+                        <span>Dota 2</span>
+                    </div>
+                    <h3>Dota Battle</h3>
+                    <div class="tournament-info">
+                        <div class="tournament-date">
+                            <i class="fas fa-calendar"></i>
+                            <span>28 декабря, 16:00</span>
+                        </div>
+                        <div class="tournament-prize">
+                            <i class="fas fa-trophy"></i>
+                            <span>1 000 000 сум</span>
+                        </div>
+                        <div class="tournament-slots">
+                            <i class="fas fa-users"></i>
+                            <span>6/8 команд</span>
+                        </div>
+                    </div>
+                    <a href="#booking" class="btn btn-outline btn-block">Участвовать</a>
+                </div>
+                <div class="tournament-card">
+                    <div class="tournament-game">
+                        <i class="fas fa-futbol"></i>
+                        <span>FIFA 24</span>
+                    </div>
+                    <h3>FIFA Weekend</h3>
+                    <div class="tournament-info">
+                        <div class="tournament-date">
+                            <i class="fas fa-calendar"></i>
+                            <span>Каждую субботу</span>
+                        </div>
+                        <div class="tournament-prize">
+                            <i class="fas fa-trophy"></i>
+                            <span>200 000 сум</span>
+                        </div>
+                        <div class="tournament-slots">
+                            <i class="fas fa-users"></i>
+                            <span>Открыто</span>
+                        </div>
+                    </div>
+                    <a href="#booking" class="btn btn-outline btn-block">Участвовать</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="section gallery" id="gallery">
         <div class="container">
             <div class="section-header">
@@ -239,6 +350,96 @@
                         <i class="fas fa-headset"></i>
                         <span>Периферия</span>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Отзывы -->
+    <section class="section reviews" id="reviews">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">⭐ Отзывы</span>
+                <h2>Что говорят наши клиенты</h2>
+                <p>Более 500 положительных отзывов</p>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">А</div>
+                        <div class="review-author">
+                            <span class="review-name">Азиз</span>
+                            <div class="review-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="review-text">"Лучший клуб в городе! Мощные компы, отличная атмосфера. Играю здесь каждые выходные с друзьями."</p>
+                    <span class="review-date">2 дня назад</span>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">Д</div>
+                        <div class="review-author">
+                            <span class="review-name">Дильшод</span>
+                            <div class="review-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="review-text">"VIP комната просто огонь! Стримил оттуда, качество супер. Рекомендую всем стримерам."</p>
+                    <span class="review-date">5 дней назад</span>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">С</div>
+                        <div class="review-author">
+                            <span class="review-name">Сардор</span>
+                            <div class="review-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="review-text">"Цены адекватные, пинг минимальный. Выиграли турнир по CS2 — призы реальные!"</p>
+                    <span class="review-date">1 неделю назад</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Программа лояльности -->
+    <section class="section loyalty" id="loyalty">
+        <div class="container">
+            <div class="loyalty-card">
+                <div class="loyalty-content">
+                    <div class="loyalty-icon"><i class="fas fa-crown"></i></div>
+                    <div class="loyalty-info">
+                        <h2>Программа лояльности</h2>
+                        <p>Накапливай баллы и получай скидки до 30%!</p>
+                        <ul class="loyalty-benefits">
+                            <li><i class="fas fa-check"></i> 1 час игры = 100 баллов</li>
+                            <li><i class="fas fa-check"></i> 1000 баллов = скидка 10%</li>
+                            <li><i class="fas fa-check"></i> 5000 баллов = VIP статус</li>
+                            <li><i class="fas fa-check"></i> Бонусы в день рождения</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="loyalty-cta">
+                    <a href="#booking" class="btn btn-primary btn-lg">
+                        <i class="fas fa-user-plus"></i> Присоединиться
+                    </a>
                 </div>
             </div>
         </div>
@@ -451,6 +652,12 @@
     </footer>
 
     <div class="toast" id="toast"></div>
+
+    <!-- Telegram Chat Widget -->
+    <a href="https://t.me/major_gaming" target="_blank" class="telegram-widget">
+        <i class="fab fa-telegram"></i>
+        <span class="telegram-tooltip">Напишите нам!</span>
+    </a>
     
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
