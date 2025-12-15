@@ -66,10 +66,12 @@ function initMap() {
         const clubLat = 41.005;
         const clubLng = 71.642;
         
-        const map = L.map('map').setView([clubLat, clubLng], 16);
+        const map = L.map('map', {
+            attributionControl: false
+        }).setView([clubLat, clubLng], 16);
         
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap'
+            attribution: ''
         }).addTo(map);
         
         const customIcon = L.divIcon({
