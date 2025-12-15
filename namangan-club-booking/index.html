@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Major Gaming - Компьютерный клуб в Намангане</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <i class="fas fa-gamepad"></i>
+                <span>Major Gaming</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link">Главная</a>
+                <a href="#about" class="nav-link">О нас</a>
+                <a href="#pricing" class="nav-link">Цены</a>
+                <a href="#gallery" class="nav-link">Галерея</a>
+                <a href="#booking" class="nav-link">Бронирование</a>
+                <a href="#contact" class="nav-link">Контакты</a>
+            </div>
+            <div class="nav-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-badge">🎮 Лучший клуб в Намангане</div>
+            <h1>Major Gaming</h1>
+            <p>Современный компьютерный клуб с мощными ПК, комфортной атмосферой и турнирами</p>
+            <div class="hero-buttons">
+                <a href="#booking" class="btn btn-primary">
+                    <i class="fas fa-calendar-check"></i> Забронировать
+                </a>
+                <a href="#about" class="btn btn-outline">
+                    <i class="fas fa-info-circle"></i> Узнать больше
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="stat-num">50+</span>
+                    <span class="stat-text">Мощных ПК</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="stat-num">24/7</span>
+                    <span class="stat-text">Работаем</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="stat-num">5000+</span>
+                    <span class="stat-text">Клиентов</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <a href="#about"><i class="fas fa-chevron-down"></i></a>
+        </div>
+    </section>
+
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">О клубе</span>
+                <h2>Почему выбирают нас?</h2>
+                <p>Major Gaming — это не просто компьютерный клуб, это место где рождаются чемпионы</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-microchip"></i></div>
+                    <h3>Мощное железо</h3>
+                    <p>RTX 4080, Intel i9, 32GB RAM — играй на максималках без лагов</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-desktop"></i></div>
+                    <h3>240Hz мониторы</h3>
+                    <p>Плавная картинка для киберспорта и комфортной игры</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <h3>Про периферия</h3>
+                    <p>HyperX, Logitech, SteelSeries — только лучшее оборудование</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-wifi"></i></div>
+                    <h3>Быстрый интернет</h3>
+                    <p>1 Гбит/с — минимальный пинг в любых онлайн играх</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-couch"></i></div>
+                    <h3>VIP зона</h3>
+                    <p>Отдельные комнаты для команд и стримеров</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-coffee"></i></div>
+                    <h3>Кафе-бар</h3>
+                    <p>Напитки, снеки и горячая еда прямо в клубе</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Тарифы</span>
+                <h2>Наши цены</h2>
+                <p>Выберите подходящий тариф для игры</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="price-card" data-tariff="main" onclick="selectPriceCard('main')">
+                    <div class="price-card-check"><i class="fas fa-check"></i></div>
+                    <div class="price-header">
+                        <h3>Main</h3>
+                        <p>Обычный зал</p>
+                    </div>
+                    <div class="price-amount">
+                        <span class="currency">сум</span>
+                        <span class="amount">15 000</span>
+                        <span class="period">/час</span>
+                    </div>
+                    <ul class="price-features">
+                        <li><i class="fas fa-check"></i> RTX 3060</li>
+                        <li><i class="fas fa-check"></i> 144Hz монитор</li>
+                        <li><i class="fas fa-check"></i> Игровое кресло</li>
+                        <li><i class="fas fa-check"></i> Наушники</li>
+                    </ul>
+                    <a href="#booking" class="btn btn-outline btn-block price-btn">Забронировать</a>
+                </div>
+                <div class="price-card" data-tariff="top" onclick="selectPriceCard('top')">
+                    <div class="price-card-check"><i class="fas fa-check"></i></div>
+                    <div class="price-badge">🔥 Популярный</div>
+                    <div class="price-header">
+                        <h3>Top</h3>
+                        <p>Игровая зона</p>
+                    </div>
+                    <div class="price-amount">
+                        <span class="currency">сум</span>
+                        <span class="amount">23 000</span>
+                        <span class="period">/час</span>
+                    </div>
+                    <ul class="price-features">
+                        <li><i class="fas fa-check"></i> RTX 4080</li>
+                        <li><i class="fas fa-check"></i> 240Hz монитор</li>
+                        <li><i class="fas fa-check"></i> Про периферия</li>
+                        <li><i class="fas fa-check"></i> Напиток в подарок</li>
+                    </ul>
+                    <a href="#booking" class="btn btn-outline btn-block price-btn">Забронировать</a>
+                </div>
+                <div class="price-card" data-tariff="vip" onclick="selectPriceCard('vip')">
+                    <div class="price-card-check"><i class="fas fa-check"></i></div>
+                    <div class="price-header">
+                        <h3>VIP</h3>
+                        <p>Отдельная комната</p>
+                    </div>
+                    <div class="price-amount">
+                        <span class="currency">сум</span>
+                        <span class="amount">30 000</span>
+                        <span class="period">/час</span>
+                    </div>
+                    <ul class="price-features">
+                        <li><i class="fas fa-check"></i> RTX 4090</li>
+                        <li><i class="fas fa-check"></i> 360Hz монитор</li>
+                        <li><i class="fas fa-check"></i> Приватная комната</li>
+                        <li><i class="fas fa-check"></i> Стриминг оборудование</li>
+                    </ul>
+                    <a href="#booking" class="btn btn-outline btn-block price-btn">Забронировать</a>
+                </div>
+            </div>
+            <div class="packages">
+                <h3><i class="fas fa-gift"></i> Выгодные пакеты <span id="packageTariffName"></span></h3>
+                <div class="packages-grid">
+                    <div class="package-card">
+                        <span class="package-hours">3 часа</span>
+                        <span class="package-price" id="package3h">62 000 сум</span>
+                        <span class="package-save" id="package3hSave">Экономия 7 000</span>
+                    </div>
+                    <div class="package-card">
+                        <span class="package-hours">5 часов</span>
+                        <span class="package-price" id="package5h">100 000 сум</span>
+                        <span class="package-save" id="package5hSave">Экономия 15 000</span>
+                    </div>
+                    <div class="package-card">
+                        <span class="package-hours">Ночь (22:00-08:00)</span>
+                        <span class="package-price" id="packageNight">180 000 сум</span>
+                        <span class="package-save">10 часов игры!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section gallery" id="gallery">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Галерея</span>
+                <h2>Наш клуб</h2>
+                <p>Посмотрите как выглядит Major Gaming изнутри</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item large">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-desktop"></i>
+                        <span>Игровой зал</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-couch"></i>
+                        <span>VIP комната</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-coffee"></i>
+                        <span>Кафе-бар</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-trophy"></i>
+                        <span>Турниры</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-headset"></i>
+                        <span>Периферия</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section booking" id="booking">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Бронирование</span>
+                <h2>Забронируйте место</h2>
+                <p>Заполните форму и мы свяжемся с вами для подтверждения</p>
+            </div>
+            <div class="booking-container">
+                <div class="booking-info">
+                    <h3><i class="fas fa-info-circle"></i> Информация</h3>
+                    <ul>
+                        <li><i class="fas fa-clock"></i> Работаем 24/7</li>
+                        <li><i class="fas fa-calendar"></i> Бронь за 30 минут до визита</li>
+                        <li><i class="fas fa-phone"></i> Подтверждение по телефону</li>
+                        <li><i class="fas fa-percent"></i> Скидка 10% при онлайн-брони</li>
+                    </ul>
+                    <div class="booking-contact">
+                        <p>Или позвоните нам:</p>
+                        <a href="tel:+998901234567" class="phone-link">
+                            <i class="fas fa-phone"></i> +998 90 123 45 67
+                        </a>
+                    </div>
+                </div>
+                <form class="booking-form" id="bookingForm">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Ваше имя</label>
+                        <input type="text" name="name" id="nameInput" required placeholder="Введите имя">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> Телефон</label>
+                        <input type="tel" name="phone" id="phoneInput" required placeholder="+998 XX XXX XX XX">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> Дата и время</label>
+                            <input type="datetime-local" name="datetime" id="datetimeInput" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-desktop"></i> Кол-во ПК</label>
+                            <select name="pcs" id="pcsSelect">
+                                <option value="1" selected>1 компьютер</option>
+                                <option value="2">2 компьютера</option>
+                                <option value="3">3 компьютера</option>
+                                <option value="4">4 компьютера</option>
+                                <option value="5">5 компьютеров</option>
+                                <option value="6">6 компьютеров</option>
+                                <option value="7">7 компьютеров</option>
+                                <option value="8">8 компьютеров</option>
+                                <option value="9">9 компьютеров</option>
+                                <option value="10">10 компьютеров</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-hourglass-half"></i> Длительность</label>
+                            <select name="duration" id="durationSelect">
+                                <option value="1">1 час</option>
+                                <option value="2">2 часа</option>
+                                <option value="3" selected>3 часа (пакет)</option>
+                                <option value="5">5 часов (пакет)</option>
+                                <option value="10">Ночь (10 часов)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-layer-group"></i> Выберите тариф</label>
+                        <input type="hidden" name="tariff" id="tariffInput" value="">
+                        <div class="tariff-selector">
+                            <div class="tariff-option" data-value="main" onclick="chooseTariff('main')">
+                                <div class="tariff-check"><i class="fas fa-check"></i></div>
+                                <div class="tariff-name">Main</div>
+                                <div class="tariff-price">15 000 сум/час</div>
+                            </div>
+                            <div class="tariff-option" data-value="top" onclick="chooseTariff('top')">
+                                <div class="tariff-check"><i class="fas fa-check"></i></div>
+                                <div class="tariff-badge">🔥</div>
+                                <div class="tariff-name">Top</div>
+                                <div class="tariff-price">23 000 сум/час</div>
+                            </div>
+                            <div class="tariff-option" data-value="vip" onclick="chooseTariff('vip')">
+                                <div class="tariff-check"><i class="fas fa-check"></i></div>
+                                <div class="tariff-badge">👑</div>
+                                <div class="tariff-name">VIP</div>
+                                <div class="tariff-price">30 000 сум/час</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-comment"></i> Комментарий (необязательно)</label>
+                        <textarea name="comment" id="commentInput" placeholder="Особые пожелания..."></textarea>
+                    </div>
+                    
+                    <!-- Итоговая сумма -->
+                    <div class="total-price-box" id="totalPriceBox">
+                        <div class="total-price-row">
+                            <span class="total-label">Тариф:</span>
+                            <span class="total-value" id="totalTariff">—</span>
+                        </div>
+                        <div class="total-price-row">
+                            <span class="total-label">Компьютеров:</span>
+                            <span class="total-value" id="totalPcs">1 ПК</span>
+                        </div>
+                        <div class="total-price-row">
+                            <span class="total-label">Длительность:</span>
+                            <span class="total-value" id="totalDuration">3 часа</span>
+                        </div>
+                        <div class="total-price-row total-main">
+                            <span class="total-label">💰 Итого:</span>
+                            <span class="total-value total-amount" id="totalAmount">— сум</span>
+                        </div>
+                        <div class="total-discount" id="totalDiscount"></div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">
+                        <i class="fas fa-paper-plane"></i> Отправить заявку
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Контакты</span>
+                <h2>Как нас найти</h2>
+                <p>Приходите к нам в гости!</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="contact-text">
+                            <h4>Адрес</h4>
+                            <p>г. Наманган, ул. Центральная, 12</p>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                        <div class="contact-text">
+                            <h4>Телефон</h4>
+                            <a href="tel:+998901234567">+998 90 123 45 67</a>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                        <div class="contact-text">
+                            <h4>Режим работы</h4>
+                            <p>Круглосуточно, 24/7</p>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon"><i class="fab fa-telegram"></i></div>
+                        <div class="contact-text">
+                            <h4>Telegram</h4>
+                            <a href="https://t.me/cyberzone_namangan" target="_blank">@cyberzone_namangan</a>
+                        </div>
+                    </div>
+                    <div class="social-buttons">
+                        <a href="https://t.me/cyberzone_namangan" target="_blank" class="social-btn telegram">
+                            <i class="fab fa-telegram"></i> Telegram
+                        </a>
+                        <a href="https://instagram.com/cyberzone_namangan" target="_blank" class="social-btn instagram">
+                            <i class="fab fa-instagram"></i> Instagram
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-map">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Major Gaming</span>
+                    </div>
+                    <p>Лучший игровой клуб в Намангане. Мощные ПК, комфортная атмосфера, честные цены.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Навигация</h4>
+                    <a href="#home">Главная</a>
+                    <a href="#about">О нас</a>
+                    <a href="#pricing">Цены</a>
+                    <a href="#booking">Бронирование</a>
+
+                </div>
+                <div class="footer-links">
+                    <h4>Контакты</h4>
+                    <a href="tel:+998901234567"><i class="fas fa-phone"></i> +998 90 123 45 67</a>
+                    <a href="mailto:info@cyberzone.uz"><i class="fas fa-envelope"></i> info@cyberzone.uz</a>
+                    <a href="#contact"><i class="fas fa-map-marker-alt"></i> ул. Центральная, 12</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Major Gaming. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script>
+        // Firebase конфигурация
+        var db = null;
+        try {
+            const firebaseConfig = {
+                apiKey: "AIzaSyDVO0HWDUQfVFLHmqIE2ifIOrdxKrPDPbo",
+                authDomain: "major-gaming.firebaseapp.com",
+                projectId: "major-gaming",
+                storageBucket: "major-gaming.firebasestorage.app",
+                messagingSenderId: "602576348146",
+                appId: "1:602576348146:web:fcf160f7d412d5f23bc16b"
+            };
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            console.log('Firebase initialized');
+        } catch (e) {
+            console.log('Firebase init error:', e);
+        }
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
