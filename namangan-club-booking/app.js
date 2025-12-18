@@ -5,6 +5,33 @@ const TARIFFS = {
     vip: { name: 'VIP', price: 30000 }
 };
 
+// ===== LocalStorage функции =====
+function getBookingsFromLocal() {
+    const data = localStorage.getItem('majorgaming_bookings');
+    return data ? JSON.parse(data) : [];
+}
+
+function saveBookingToLocal(booking) {
+    const bookings = getBookingsFromLocal();
+    bookings.push(booking);
+    localStorage.setItem('majorgaming_bookings', JSON.stringify(bookings));
+}
+
+function updateBookingInLocal(id, updates) {
+    const bookings = getBookingsFromLocal();
+    const index = bookings.findIndex(b => b.id === id);
+    if (index !== -1) {
+        bookings[index] = { ...bookings[index], ...updates };
+        localStorage.setItem('majorgaming_bookings', JSON.stringify(bookings));
+    }
+}
+
+function deleteBookingFromLocal(id) {
+    const bookings = getBookingsFromLocal();
+    const filtered = bookings.filter(b => b.id !== id);
+    localStorage.setItem('majorgaming_bookings', JSON.stringify(filtered));
+}
+
 // ===== Инициализация =====
 document.addEventListener('DOMContentLoaded', function() {
     initMap();
@@ -377,20 +404,8 @@ function submitBooking() {
     const dateObj = new Date(datetime);
     const formattedDate = dateObj.toLocaleDateString('ru-RU') + ' в ' + dateObj.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
     
-    // Сохраняем в Firebase
-    if (typeof db !== 'undefined' && db) {
-        try {
-            db.collection('bookings').add(booking)
-                .then(function() {
-                    console.log('Бронирование сохранено в Firebase');
-                })
-                .catch(function(error) {
-                    console.log('Firebase error:', error);
-                });
-        } catch (e) {
-            console.log('Firebase exception:', e);
-        }
-    }
+    // Сохраняем в localStorage
+    saveBookingToLocal(booking);
     
     // Отправляем в Telegram
     sendToTelegram(booking, formattedDate);

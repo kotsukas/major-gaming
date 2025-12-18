@@ -353,20 +353,25 @@
         </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDVO0HWDUQfVFLHmqIE2ifIOrdxKrPDPbo",
-            authDomain: "major-gaming.firebaseapp.com",
-            projectId: "major-gaming",
-            storageBucket: "major-gaming.firebasestorage.app",
-            messagingSenderId: "602576348146",
-            appId: "1:602576348146:web:fcf160f7d412d5f23bc16b"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+        // ===== LocalStorage функции =====
+        function getBookingsFromLocal() {
+            const data = localStorage.getItem('majorgaming_bookings');
+            return data ? JSON.parse(data) : [];
+        }
+        
+        function saveBookingsToLocal(bookings) {
+            localStorage.setItem('majorgaming_bookings', JSON.stringify(bookings));
+        }
+        
+        function getShiftsFromLocal() {
+            const data = localStorage.getItem('majorgaming_shifts');
+            return data ? JSON.parse(data) : [];
+        }
+        
+        function saveShiftsToLocal(shifts) {
+            localStorage.setItem('majorgaming_shifts', JSON.stringify(shifts));
+        }
         
         const ADMIN_LOGIN = 'admin';
         const ADMIN_PASSWORD = 'major2025';
@@ -482,8 +487,6 @@
                 bookingsAtStart: allBookings.filter(b => b.status === 'pending' || b.status === 'confirmed').length
             };
             localStorage.setItem('currentShift', JSON.stringify(currentShift));
-            // Сохраняем статус смены в Firebase для проверки на сайте
-            db.collection('settings').doc('shift').set({ active: true, startTime: currentShift.startTime });
             updateShiftUI(true);
             showNotification('success', 'Смена начата', 'Удачной работы!');
         }
@@ -523,37 +526,33 @@
             };
 
             
-            db.collection('shifts').add(shiftData).then(function() {
-                // Отключаем приём броней
-                db.collection('settings').doc('shift').set({ active: false });
-                localStorage.removeItem('currentShift');
-                currentShift = null;
-                updateShiftUI(false);
-                closeShiftModal();
-                document.getElementById('shiftComment').value = '';
-                showNotification('success', 'Смена закрыта', 'Данные сохранены');
-                loadShifts();
-            });
+            // Сохраняем смену в localStorage
+            allShifts.unshift(shiftData);
+            saveShiftsToLocal(allShifts);
+            
+            localStorage.removeItem('currentShift');
+            currentShift = null;
+            updateShiftUI(false);
+            closeShiftModal();
+            document.getElementById('shiftComment').value = '';
+            showNotification('success', 'Смена закрыта', 'Данные сохранены');
         }
 
         function loadShifts() {
-            db.collection('shifts').orderBy('id', 'desc').get().then(function(snapshot) {
-                allShifts = [];
-                snapshot.forEach(function(doc) { allShifts.push({ ...doc.data(), docId: doc.id }); });
-            });
+            allShifts = getShiftsFromLocal();
         }
         
         function loadBookings() {
-            if (unsubscribe) unsubscribe();
-            unsubscribe = db.collection('bookings').orderBy('id', 'desc').onSnapshot(function(snapshot) {
-                allBookings = [];
-                snapshot.forEach(function(doc) { allBookings.push({ ...doc.data(), docId: doc.id }); });
-                const page = document.querySelector('.sidebar-nav a.active')?.dataset.page;
-                if (page === 'dashboard') { updateStats(); renderChart(); renderRecentBookings(); }
-                if (page === 'bookings') renderBookingsTable(filterBookings(allBookings));
-                if (page === 'stats') renderDetailedStats();
-            });
+            allBookings = getBookingsFromLocal();
+            allBookings.sort((a, b) => b.id - a.id);
+            const page = document.querySelector('.sidebar-nav a.active')?.dataset.page;
+            if (page === 'dashboard') { updateStats(); renderChart(); renderRecentBookings(); }
+            if (page === 'bookings') renderBookingsTable(filterBookings(allBookings));
+            if (page === 'stats') renderDetailedStats();
         }
+        
+        // Обновляем данные каждые 5 секунд
+        setInterval(loadBookings, 5000);
         
         function loadPage(page) {
             const content = document.getElementById('mainContent');
@@ -837,13 +836,19 @@
         
         function applyFilters() { renderBookingsTable(filterBookings(allBookings)); }
         
-        function updateStatus(docId, status) {
+        function updateStatus(bookingId, status) {
             // Проверяем начата ли смена для подтверждения/завершения
             if ((status === 'confirmed' || status === 'completed') && !currentShift) {
                 showNotification('error', 'Смена не начата!', 'Начните смену чтобы принимать брони');
                 return;
             }
-            db.collection('bookings').doc(docId).update({ status: status }).then(() => showNotification('success', 'Обновлено', 'Статус изменён'));
+            const index = allBookings.findIndex(b => (b.docId || b.id) == bookingId);
+            if (index !== -1) {
+                allBookings[index].status = status;
+                saveBookingsToLocal(allBookings);
+                loadBookings();
+                showNotification('success', 'Обновлено', 'Статус изменён');
+            }
         }
         
         function showDeleteConfirm(btn, docId) {
@@ -863,15 +868,18 @@
             setTimeout(() => confirm.remove(), 5000);
         }
         
-        function deleteBooking(docId) {
+        function deleteBooking(bookingId) {
             document.querySelectorAll('.delete-confirm').forEach(el => el.remove());
-            db.collection('bookings').doc(docId).delete().then(() => showNotification('success', 'Удалено', 'Бронь удалена'));
+            allBookings = allBookings.filter(b => (b.docId || b.id) != bookingId);
+            saveBookingsToLocal(allBookings);
+            loadBookings();
+            showNotification('success', 'Удалено', 'Бронь удалена');
         }
         
-        function openEditModal(docId) {
-            const b = allBookings.find(x => x.docId === docId);
+        function openEditModal(bookingId) {
+            const b = allBookings.find(x => (x.docId || x.id) == bookingId);
             if (!b) return;
-            document.getElementById('editDocId').value = docId;
+            document.getElementById('editDocId').value = bookingId;
             document.getElementById('editName').value = b.name || '';
             document.getElementById('editPhone').value = b.phone || '';
             document.getElementById('editDatetime').value = b.datetime || '';
@@ -883,14 +891,19 @@
         function closeModal() { document.getElementById('editModal').classList.remove('active'); }
         
         function saveEdit() {
-            const docId = document.getElementById('editDocId').value;
-            db.collection('bookings').doc(docId).update({
-                name: document.getElementById('editName').value,
-                phone: document.getElementById('editPhone').value,
-                datetime: document.getElementById('editDatetime').value,
-                pcs: parseInt(document.getElementById('editPcs').value) || 1,
-                status: document.getElementById('editStatus').value
-            }).then(() => { closeModal(); showNotification('success', 'Сохранено', 'Данные обновлены'); });
+            const bookingId = document.getElementById('editDocId').value;
+            const index = allBookings.findIndex(b => (b.docId || b.id) == bookingId);
+            if (index !== -1) {
+                allBookings[index].name = document.getElementById('editName').value;
+                allBookings[index].phone = document.getElementById('editPhone').value;
+                allBookings[index].datetime = document.getElementById('editDatetime').value;
+                allBookings[index].pcs = parseInt(document.getElementById('editPcs').value) || 1;
+                allBookings[index].status = document.getElementById('editStatus').value;
+                saveBookingsToLocal(allBookings);
+                loadBookings();
+                closeModal();
+                showNotification('success', 'Сохранено', 'Данные обновлены');
+            }
         }
         
         function exportToCSV() {
