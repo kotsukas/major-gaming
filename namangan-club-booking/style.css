@@ -86,6 +86,8 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 body {
@@ -94,13 +96,17 @@ body {
     color: var(--text);
     line-height: 1.6;
     transition: var(--transition);
-    overflow-x: clip;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1.5rem;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 /* Buttons */
@@ -640,47 +646,57 @@ body {
 @media (max-width: 768px) {
     .hero-colizeum {
         min-height: 100svh;
+        width: 100%;
+        overflow: hidden;
     }
     
     .hero-big-text {
         justify-content: flex-start;
-        padding-top: 15vh;
-        padding-left: 5%;
+        padding-top: 12vh;
+        padding-left: 3%;
+        width: 100%;
+        overflow: hidden;
     }
     
     .big-text-major,
     .big-text-gaming {
-        font-size: clamp(3.5rem, 18vw, 8rem);
+        font-size: clamp(3rem, 16vw, 7rem);
+        width: 100%;
     }
     
     .big-text-gaming {
-        margin-left: 10%;
+        margin-left: 5%;
     }
     
     .hero-center-content {
         position: absolute;
-        bottom: 25%;
+        bottom: 20%;
+        left: 0;
+        right: 0;
         justify-content: center;
         padding: 0 1rem;
+        width: 100%;
     }
     
     .hero-info-box {
-        padding: 1.5rem 2rem;
-        max-width: 90%;
+        padding: 1.5rem;
+        width: 100%;
+        max-width: 100%;
     }
     
     .hero-subtitle,
     .hero-subtitle-accent {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
     
     .hero-bottom-text {
-        bottom: 1.5rem;
+        bottom: 1rem;
         padding: 0 1rem;
+        width: 100%;
     }
     
     .bottom-text-item {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
         letter-spacing: 1px;
     }
 }
@@ -688,17 +704,21 @@ body {
 @media (max-width: 480px) {
     .big-text-major,
     .big-text-gaming {
-        font-size: clamp(2.5rem, 15vw, 5rem);
+        font-size: clamp(2.2rem, 14vw, 4.5rem);
     }
     
     .hero-info-box {
-        padding: 1.25rem 1.5rem;
+        padding: 1rem 1.25rem;
     }
     
     .hero-subtitle,
     .hero-subtitle-accent {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         letter-spacing: 1px;
+    }
+    
+    .hero-cta {
+        font-size: 0.8rem;
     }
 }
 
@@ -710,7 +730,9 @@ body {
 /* Sections */
 .section {
     padding: 5rem 0;
-    overflow: visible;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
 }
 
 .section-header {

@@ -573,7 +573,7 @@ function updatePackagesForTariff(tariff) {
     // Расчет цен пакетов (со скидкой)
     const price3h = Math.round(price * 3 * 0.9); // 10% скидка
     const price5h = Math.round(price * 5 * 0.87); // 13% скидка
-    const priceNight = Math.round(price * 10 * 0.78); // 22% скидка (ночь)
+    const priceNight = Math.round(price * 8 * 0.75); // 25% скидка (ночь 8 часов)
     
     // Экономия
     const save3h = (price * 3) - price3h;
@@ -654,7 +654,7 @@ function updateTotalPrice() {
         2: '2 часа',
         3: '3 часа (пакет)',
         5: '5 часов (пакет)',
-        10: 'Ночь (10 часов)'
+        8: 'Ночь (8 часов)'
     };
     
     const totalDuration = document.getElementById('totalDuration');
@@ -689,9 +689,9 @@ function updateTotalPrice() {
     } else if (duration === 5) {
         discount = 0.13;
         discountText = '🎁 Скидка 13% на пакет 5 часов!';
-    } else if (duration === 10) {
-        discount = 0.22;
-        discountText = '🎁 Скидка 22% на ночной пакет!';
+    } else if (duration === 8) {
+        discount = 0.25;
+        discountText = '🎁 Скидка 25% на ночной пакет!';
     }
     
     if (discount > 0) {
@@ -867,8 +867,8 @@ const TRANSLATIONS = {
         packages_title: 'Выгодные пакеты',
         pkg_3h: '3 часа',
         pkg_5h: '5 часов',
-        pkg_night: 'Ночь (22:00-08:00)',
-        pkg_night_hours: '10 часов игры!',
+        pkg_night: 'Ночь (00:00-08:00)',
+        pkg_night_hours: '8 часов игры!',
         pkg_select: 'Выберите тариф',
         pkg_saving: 'Экономия',
         
@@ -1031,8 +1031,8 @@ const TRANSLATIONS = {
         packages_title: 'Foydali paketlar',
         pkg_3h: '3 soat',
         pkg_5h: '5 soat',
-        pkg_night: 'Tun (22:00-08:00)',
-        pkg_night_hours: '10 soat o\'yin!',
+        pkg_night: 'Tun (00:00-08:00)',
+        pkg_night_hours: '8 soat o\'yin!',
         pkg_select: 'Tarifni tanlang',
         pkg_saving: 'Tejash',
         
