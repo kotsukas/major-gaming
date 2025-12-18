@@ -42,7 +42,91 @@ document.addEventListener('DOMContentLoaded', function() {
     loadTheme();
     updatePackages();
     updateTotalPrice();
+    initSeasonalEffects();
 });
+
+// ===== Сезонные эффекты =====
+function getSeason() {
+    const month = new Date().getMonth();
+    if (month >= 2 && month <= 4) return 'spring'; // Март-Май
+    if (month >= 5 && month <= 7) return 'summer'; // Июнь-Август
+    if (month >= 8 && month <= 10) return 'autumn'; // Сентябрь-Ноябрь
+    return 'winter'; // Декабрь-Февраль
+}
+
+function initSeasonalEffects() {
+    const season = getSeason();
+    document.body.setAttribute('data-season', season);
+    
+    if (season === 'winter') {
+        createSnowfall();
+    } else if (season === 'autumn') {
+        createFallingLeaves();
+    } else if (season === 'spring') {
+        createPetals();
+    }
+    // Лето - без эффектов, просто яркие цвета
+}
+
+function createSnowfall() {
+    const snowContainer = document.createElement('div');
+    snowContainer.className = 'snow-container';
+    snowContainer.innerHTML = '';
+    
+    // Создаём 50 снежинок
+    for (let i = 0; i < 50; i++) {
+        const snowflake = document.createElement('div');
+        snowflake.className = 'snowflake';
+        snowflake.innerHTML = '❄';
+        snowflake.style.left = Math.random() * 100 + '%';
+        snowflake.style.animationDuration = (Math.random() * 3 + 5) + 's';
+        snowflake.style.animationDelay = Math.random() * 5 + 's';
+        snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+        snowflake.style.opacity = Math.random() * 0.6 + 0.4;
+        snowContainer.appendChild(snowflake);
+    }
+    
+    document.body.appendChild(snowContainer);
+}
+
+function createFallingLeaves() {
+    const leavesContainer = document.createElement('div');
+    leavesContainer.className = 'leaves-container';
+    
+    const leafEmojis = ['🍂', '🍁', '🍃'];
+    
+    for (let i = 0; i < 30; i++) {
+        const leaf = document.createElement('div');
+        leaf.className = 'falling-leaf';
+        leaf.innerHTML = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
+        leaf.style.left = Math.random() * 100 + '%';
+        leaf.style.animationDuration = (Math.random() * 5 + 8) + 's';
+        leaf.style.animationDelay = Math.random() * 8 + 's';
+        leaf.style.fontSize = (Math.random() * 15 + 15) + 'px';
+        leavesContainer.appendChild(leaf);
+    }
+    
+    document.body.appendChild(leavesContainer);
+}
+
+function createPetals() {
+    const petalsContainer = document.createElement('div');
+    petalsContainer.className = 'petals-container';
+    
+    for (let i = 0; i < 25; i++) {
+        const petal = document.createElement('div');
+        petal.className = 'falling-petal';
+        petal.innerHTML = '🌸';
+        petal.style.left = Math.random() * 100 + '%';
+        petal.style.animationDuration = (Math.random() * 5 + 7) + 's';
+        petal.style.animationDelay = Math.random() * 7 + 's';
+        petal.style.fontSize = (Math.random() * 10 + 12) + 'px';
+        petal.style.opacity = Math.random() * 0.5 + 0.5;
+        petalsContainer.appendChild(petal);
+    }
+    
+    document.body.appendChild(petalsContainer);
+}
 
 // ===== Навигация =====
 function toggleMenu() {
@@ -570,14 +654,10 @@ function updatePackagesForTariff(tariff) {
     const price = tariffData.price;
     const name = tariffData.name;
     
-    // Расчет цен пакетов (со скидкой)
-    const price3h = Math.round(price * 3 * 0.9); // 10% скидка
-    const price5h = Math.round(price * 5 * 0.87); // 13% скидка
-    const priceNight = Math.round(price * 8 * 0.75); // 25% скидка (ночь 8 часов)
-    
-    // Экономия
-    const save3h = (price * 3) - price3h;
-    const save5h = (price * 5) - price5h;
+    // Расчет цен пакетов (без скидок)
+    const price3h = price * 3;
+    const price5h = price * 5;
+    const priceNight = price * 8;
     
     // Форматирование чисел
     function formatNum(n) {
@@ -599,8 +679,8 @@ function updatePackagesForTariff(tariff) {
     if (pkg3h) pkg3h.textContent = formatNum(price3h) + ' ' + currency;
     if (pkg5h) pkg5h.textContent = formatNum(price5h) + ' ' + currency;
     if (pkgNight) pkgNight.textContent = formatNum(priceNight) + ' ' + currency;
-    if (save3hEl) save3hEl.textContent = savingText + ' ' + formatNum(save3h);
-    if (save5hEl) save5hEl.textContent = savingText + ' ' + formatNum(save5h);
+    if (save3hEl) save3hEl.style.display = 'none';
+    if (save5hEl) save5hEl.style.display = 'none';
 }
 
 
@@ -678,44 +758,14 @@ function updateTotalPrice() {
     
     if (totalTariff) totalTariff.textContent = tariffData.name + ' (' + formatPrice(basePrice) + ' сум/час)';
     
-    // Расчёт цены с учётом скидок на пакеты
-    let pricePerPc = basePrice * duration;
-    let discount = 0;
-    let discountText = '';
-    
-    if (duration === 3) {
-        discount = 0.10;
-        discountText = '🎁 Скидка 10% на пакет 3 часа!';
-    } else if (duration === 5) {
-        discount = 0.13;
-        discountText = '🎁 Скидка 13% на пакет 5 часов!';
-    } else if (duration === 8) {
-        discount = 0.25;
-        discountText = '🎁 Скидка 25% на ночной пакет!';
-    }
-    
-    if (discount > 0) {
-        const savedPerPc = Math.round(pricePerPc * discount);
-        pricePerPc = pricePerPc - savedPerPc;
-    }
-    
-    // Умножаем на количество ПК
+    // Расчёт цены (без скидок)
+    const pricePerPc = basePrice * duration;
     const finalPrice = pricePerPc * pcs;
-    const totalSaved = Math.round(basePrice * duration * discount * pcs);
-    
-    if (discount > 0 && totalSaved > 0) {
-        discountText += ' (экономия ' + formatPrice(totalSaved) + ' сум)';
-    }
     
     if (totalAmount) totalAmount.textContent = formatPrice(Math.round(finalPrice)) + ' сум';
     
     if (totalDiscount) {
-        if (discount > 0) {
-            totalDiscount.textContent = discountText;
-            totalDiscount.classList.add('show');
-        } else {
-            totalDiscount.classList.remove('show');
-        }
+        totalDiscount.classList.remove('show');
     }
 }
 
