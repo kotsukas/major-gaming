@@ -1,3 +1,4 @@
+// ===== Major Gaming v2.1 - Seasonal Effects =====
 // ===== Тарифы и цены =====
 const TARIFFS = {
     main: { name: 'Main', price: 15000 },
