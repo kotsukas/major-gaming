@@ -4,57 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Проверить статус брони - Major Gaming</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #8b5cf6;
-            --primary-dark: #7c3aed;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
-            --bg-card: rgba(255,255,255,0.05);
-            --text: #ffffff;
-            --text-muted: #94a3b8;
-            --border: rgba(255,255,255,0.1);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
+        .status-page {
             min-height: 100vh;
+            padding-top: 100px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
         }
-        .container {
+        .status-container {
             width: 100%;
             max-width: 500px;
+            padding: 2rem;
         }
-        .logo {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .logo a {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: var(--text);
-            text-decoration: none;
-        }
-        .logo i {
-            background: linear-gradient(135deg, var(--primary), #06b6d4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .card {
+        .status-card {
             background: var(--bg-card);
             backdrop-filter: blur(20px);
             border: 1px solid var(--border);
@@ -62,79 +28,30 @@
             padding: 2.5rem;
             box-shadow: 0 25px 50px rgba(0,0,0,0.3);
         }
-        .card-header {
+        .status-card-header {
             text-align: center;
             margin-bottom: 2rem;
         }
-        .card-header h1 {
+        .status-card-header h1 {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
         }
-        .card-header p {
+        .status-card-header p {
             color: var(--text-muted);
             font-size: 0.95rem;
         }
-        .form-group {
-            margin-bottom: 1.5rem;
+        .status-form .form-group input {
+            padding-left: 3rem;
         }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-muted);
-        }
-        .input-wrapper {
+        .status-form .input-wrapper {
             position: relative;
         }
-        .input-wrapper i {
+        .status-form .input-wrapper i {
             position: absolute;
             left: 1rem;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
-        }
-        .form-group input {
-            width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            background: rgba(255,255,255,0.05);
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            color: var(--text);
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: rgba(139, 92, 246, 0.1);
-        }
-        .form-group input::placeholder {
-            color: var(--text-muted);
-        }
-        .btn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
-        }
-        .btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
         }
         
         /* Results */
@@ -161,11 +78,14 @@
             padding: 1.5rem;
             margin-bottom: 1rem;
             transition: all 0.3s;
+            animation: fadeIn 0.3s ease forwards;
         }
         .booking-card:hover {
             border-color: var(--primary);
             transform: translateX(5px);
         }
+        .booking-card:nth-child(2) { animation-delay: 0.1s; }
+        .booking-card:nth-child(3) { animation-delay: 0.2s; }
         .booking-header {
             display: flex;
             justify-content: space-between;
@@ -184,15 +104,15 @@
         }
         .status.pending {
             background: rgba(245, 158, 11, 0.2);
-            color: var(--warning);
+            color: #f59e0b;
         }
         .status.confirmed {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success);
+            background: rgba(0, 240, 255, 0.2);
+            color: var(--primary);
         }
         .status.cancelled {
             background: rgba(239, 68, 68, 0.2);
-            color: var(--danger);
+            color: #ef4444;
         }
         .booking-details {
             display: grid;
@@ -236,16 +156,10 @@
             color: var(--primary);
         }
         
-        /* Animation */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .booking-card {
-            animation: fadeIn 0.3s ease forwards;
-        }
-        .booking-card:nth-child(2) { animation-delay: 0.1s; }
-        .booking-card:nth-child(3) { animation-delay: 0.2s; }
         
         /* Loading */
         .loading {
@@ -269,60 +183,99 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">
-            <a href="index.html">
-                <i class="fas fa-gamepad"></i>
-                <span>Major Gaming</span>
-            </a>
-        </div>
-        
-        <div class="card">
-            <div class="card-header">
-                <h1>🔍 Проверить статус брони</h1>
-                <p>Введите номер телефона, указанный при бронировании</p>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="nav-toggle" id="navToggle" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
-            
-            <form id="checkForm" onsubmit="checkStatus(event)">
-                <div class="form-group">
-                    <label>Номер телефона</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-phone"></i>
-                        <input type="tel" id="phoneInput" placeholder="+998 XX XXX XX XX" required>
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🎮</span>
+                <span class="logo-text">MAJOR<span class="logo-accent">GAMING</span></span>
+            </a>
+            <div class="nav-right">
+                <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-toggle" onclick="toggleLangDropdown()">
+                        <span id="langText">RU</span>
+                        <i class="fas fa-chevron-up" id="langArrow"></i>
+                    </div>
+                    <div class="lang-menu" id="langMenu">
+                        <div class="lang-option" data-lang="uz" onclick="selectLang(this.dataset.lang)">UZ</div>
                     </div>
                 </div>
-                <button type="submit" class="btn" id="submitBtn">
-                    <i class="fas fa-search"></i>
-                    Найти мои брони
-                </button>
-            </form>
-            
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>Ищем ваши бронирования...</p>
-            </div>
-            
-            <div class="results" id="results">
-                <div class="results-header">
-                    <i class="fas fa-list"></i>
-                    <h3>Ваши бронирования</h3>
-                </div>
-                <div id="bookingsList"></div>
             </div>
         </div>
-        
-        <div class="back-link">
-            <a href="index.html">
-                <i class="fas fa-arrow-left"></i>
-                Вернуться на главную
-            </a>
+    </nav>
+
+    <!-- Полноэкранное меню -->
+    <div class="fullscreen-menu" id="navMenu">
+        <button class="menu-close-btn" onclick="toggleMenu()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="menu-content">
+            <a href="index.html#home" class="menu-link">Главная</a>
+            <a href="index.html#games" class="menu-link">Игры</a>
+            <a href="index.html#about" class="menu-link">О нас</a>
+            <a href="index.html#pricing" class="menu-link">Цены</a>
+            <a href="index.html#gallery" class="menu-link">Галерея</a>
+            <a href="index.html#booking" class="menu-link">Бронирование</a>
+            <a href="index.html#contact" class="menu-link">Контакты</a>
+            <a href="index.html#referral" class="menu-link">Бонусы</a>
+            <a href="status.html" class="menu-link active-link">Статус брони</a>
+        </div>
+    </div>
+    <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+
+    <div class="status-page">
+        <div class="status-container">
+            <div class="status-card">
+                <div class="status-card-header">
+                    <h1>🔍 Проверить статус брони</h1>
+                    <p>Введите номер телефона, указанный при бронировании</p>
+                </div>
+                
+                <form class="status-form" id="checkForm" onsubmit="checkStatus(event)">
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> Номер телефона</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="phoneInput" placeholder="+998 XX XXX XX XX" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitBtn">
+                        <i class="fas fa-search"></i> Найти мои брони
+                    </button>
+                </form>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Ищем ваши бронирования...</p>
+                </div>
+                
+                <div class="results" id="results">
+                    <div class="results-header">
+                        <i class="fas fa-list"></i>
+                        <h3>Ваши бронирования</h3>
+                    </div>
+                    <div id="bookingsList"></div>
+                </div>
+            </div>
+            
+            <div class="back-link">
+                <a href="index.html">
+                    <i class="fas fa-arrow-left"></i>
+                    Вернуться на главную
+                </a>
+            </div>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script>
+        // Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDVO0HWDUQfVFLHmqIE2ifIOrdxKrPDPbo",
             authDomain: "major-gaming.firebaseapp.com",
@@ -333,6 +286,39 @@
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+
+        // Навигация
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            const toggle = document.getElementById('navToggle');
+            const overlay = document.getElementById('menuOverlay');
+            if (menu) menu.classList.toggle('active');
+            if (toggle) toggle.classList.toggle('active');
+            if (overlay) overlay.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function toggleLangDropdown() {
+            document.getElementById('langDropdown').classList.toggle('active');
+        }
+
+        function selectLang(lang) {
+            document.getElementById('langDropdown').classList.remove('active');
+            document.getElementById('langText').textContent = lang.toUpperCase();
+            const langOption = document.querySelector('.lang-option');
+            if (langOption) {
+                const otherLang = lang === 'ru' ? 'uz' : 'ru';
+                langOption.textContent = otherLang.toUpperCase();
+                langOption.dataset.lang = otherLang;
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('langDropdown');
+            if (dropdown && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
         
         // Маска телефона
         document.getElementById('phoneInput').addEventListener('input', function(e) {
@@ -365,12 +351,10 @@
                 return;
             }
             
-            // Показываем загрузку
             loading.classList.add('show');
             results.classList.remove('show');
             submitBtn.disabled = true;
             
-            // Ищем брони по телефону (без индекса - загружаем все и фильтруем)
             db.collection('bookings')
                 .get()
                 .then(function(snapshot) {
@@ -384,7 +368,6 @@
                             bookings.push(data);
                         }
                     });
-                    // Сортируем по id (новые первые)
                     bookings.sort((a, b) => b.id - a.id);
                     
                     if (bookings.length === 0) {
@@ -392,7 +375,7 @@
                             <div class="no-results">
                                 <i class="fas fa-inbox"></i>
                                 <p>Бронирований не найдено</p>
-                                <p style="font-size: 0.85rem; margin-top: 0.5rem;">Проверьте правильность номера телефона</p>
+                                <p style="font-size: 0.85rem; margin-top: 0.5rem;">Проверьте правильность номера</p>
                             </div>
                         `;
                     } else {
@@ -401,11 +384,10 @@
                             const formattedDate = date.toLocaleDateString('ru-RU', {day: 'numeric', month: 'long', year: 'numeric'});
                             const formattedTime = date.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
                             const statusText = {
-                                'pending': '⏳ Ожидает подтверждения',
+                                'pending': '⏳ Ожидает',
                                 'confirmed': '✅ Подтверждено',
                                 'cancelled': '❌ Отменено'
                             };
-                            
                             return `
                                 <div class="booking-card">
                                     <div class="booking-header">
@@ -422,7 +404,7 @@
                                             <span class="value">${formattedTime}</span>
                                         </div>
                                         <div class="booking-row">
-                                            <span class="label">🖥 Компьютеров</span>
+                                            <span class="label">🖥 ПК</span>
                                             <span class="value">${b.pcs || 1} шт.</span>
                                         </div>
                                         <div class="booking-row">
@@ -434,7 +416,6 @@
                             `;
                         }).join('');
                     }
-                    
                     results.classList.add('show');
                 })
                 .catch(function(error) {

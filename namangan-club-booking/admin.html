@@ -3,320 +3,360 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Панель управления</title>
+    <title>Major Gaming — Панель управления</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #8b5cf6;
-            --primary-dark: #7c3aed;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --bg: #f1f5f9;
-            --bg-card: #ffffff;
-            --text: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
+            --primary: #00f0ff;
+            --primary-dark: #00c4cc;
+            --secondary: #ff00ff;
+            --accent: #ffcc00;
+            --success: #00ff88;
+            --warning: #ffaa00;
+            --danger: #ff3366;
+            --bg: #0a0a0f;
+            --bg-dark: #050508;
+            --bg-card: #12121a;
+            --bg-card-hover: #1a1a25;
+            --text: #ffffff;
+            --text-muted: #8a8a9a;
+            --border: #2a2a3a;
+            --gradient: linear-gradient(135deg, #00f0ff 0%, #ff00ff 100%);
+            --neon-glow: 0 0 20px rgba(0, 240, 255, 0.5);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
         
-        /* Login Screen */
-        .login-screen {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-        .login-box {
-            background: var(--bg-card);
-            padding: 2.5rem;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 360px;
-        }
-        .login-box h2 {
-            text-align: center;
-            margin-bottom: 0.5rem;
-            font-size: 1.5rem;
-        }
-        .login-box p {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-        }
-        .login-box .form-group {
-            margin-bottom: 1rem;
-        }
-        .login-box label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-        .login-box input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        .login-box input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        .login-btn {
-            width: 100%;
-            padding: 0.875rem;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
-        }
-        .login-error {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-            padding: 0.75rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            text-align: center;
-            display: none;
-            font-size: 0.9rem;
-        }
+        /* Login */
+        .login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 100%); }
+        .login-box { background: var(--bg-card); padding: 2.5rem; border-radius: 20px; width: 100%; max-width: 400px; border: 1px solid var(--border); }
+        .login-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient); }
+        .login-box { position: relative; overflow: hidden; }
+        .login-logo { text-align: center; margin-bottom: 1.5rem; }
+        .login-logo i { font-size: 3rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .login-box h2 { text-align: center; margin-bottom: 0.5rem; }
+        .login-box > p { text-align: center; color: var(--text-muted); margin-bottom: 2rem; }
+        .login-box .form-group { margin-bottom: 1.25rem; }
+        .login-box label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-muted); }
+        .login-box input { width: 100%; padding: 0.875rem 1rem; border: 2px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--text); font-size: 1rem; }
+        .login-box input:focus { outline: none; border-color: var(--primary); }
+        .login-btn { width: 100%; padding: 1rem; background: var(--gradient); color: var(--bg); border: none; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+        .login-btn:hover { box-shadow: var(--neon-glow); }
+        .login-error { background: rgba(255, 51, 102, 0.1); color: var(--danger); padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem; text-align: center; display: none; }
         
         /* Admin Panel */
-        .admin-panel { display: none; padding: 2rem; }
+        .admin-panel { display: none; }
         .admin-panel.active { display: block; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-        .logo i { color: var(--primary); }
-        .header-actions { display: flex; gap: 0.75rem; }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-            border: none;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-        }
-        .btn-outline {
-            background: var(--bg-card);
-            color: var(--text);
-            border: 2px solid var(--border);
-        }
-        .btn-danger {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-        }
-        .btn:hover { transform: translateY(-2px); }
         
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        .stat-card {
-            background: var(--bg-card);
-            padding: 1.25rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .stat-card .icon {
-            width: 45px; height: 45px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            margin-bottom: 0.75rem;
-        }
-        .stat-card .icon.purple { background: rgba(139, 92, 246, 0.1); color: var(--primary); }
-        .stat-card .icon.yellow { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
-        .stat-card .icon.green { background: rgba(16, 185, 129, 0.1); color: var(--success); }
-        .stat-card .number { font-size: 1.75rem; font-weight: 700; }
-        .stat-card .label { color: var(--text-muted); font-size: 0.85rem; }
+        /* Sidebar */
+        .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 260px; background: var(--bg-card); border-right: 1px solid var(--border); padding: 1.5rem; z-index: 100; }
+        .sidebar-logo { display: flex; align-items: center; gap: 0.75rem; font-size: 1.25rem; font-weight: 800; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+        .sidebar-logo i { font-size: 1.5rem; color: var(--primary); text-shadow: var(--neon-glow); }
+        .sidebar-nav { list-style: none; }
+        .sidebar-nav li { margin-bottom: 0.5rem; }
+        .sidebar-nav a { display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1rem; border-radius: 10px; color: var(--text-muted); text-decoration: none; transition: all 0.3s; font-weight: 500; }
+        .sidebar-nav a:hover, .sidebar-nav a.active { background: rgba(0, 240, 255, 0.1); color: var(--primary); }
+        .sidebar-nav a.active { box-shadow: inset 3px 0 0 var(--primary); }
+        .sidebar-nav i { width: 20px; text-align: center; }
         
-        .table-container {
-            background: var(--bg-card);
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            overflow: hidden;
-        }
-        .table-header {
-            padding: 1rem 1.25rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .table-header h2 { font-size: 1.1rem; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 0.875rem 1.25rem; text-align: left; border-bottom: 1px solid var(--border); }
-        th {
-            background: var(--bg);
-            font-weight: 600;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-        }
-        .status {
-            display: inline-block;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-        .status.pending { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
-        .status.confirmed { background: rgba(16, 185, 129, 0.1); color: var(--success); }
-        .status.cancelled { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
-        .actions { display: flex; gap: 0.4rem; }
-        .action-btn {
-            width: 28px; height: 28px;
-            border: none; border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            font-size: 0.8rem;
-        }
-        .action-btn.confirm { background: rgba(16, 185, 129, 0.1); color: var(--success); }
-        .action-btn.cancel { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
-        .action-btn.delete { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
-        .action-btn:hover { transform: scale(1.1); }
-        .empty-state { text-align: center; padding: 2.5rem; color: var(--text-muted); }
-        .empty-state i { font-size: 2.5rem; margin-bottom: 0.75rem; opacity: 0.5; }
+        /* Shift Status */
+        .shift-status { margin-top: 2rem; padding: 1rem; background: var(--bg); border-radius: 10px; border: 1px solid var(--border); }
+        .shift-status h4 { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .shift-indicator { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+        .shift-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .shift-dot.active { background: var(--success); box-shadow: 0 0 10px var(--success); animation: pulse 2s infinite; }
+        .shift-dot.inactive { background: var(--danger); }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .shift-btn { width: 100%; padding: 0.6rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .shift-btn.start { background: rgba(0, 255, 136, 0.15); color: var(--success); }
+        .shift-btn.end { background: rgba(255, 51, 102, 0.15); color: var(--danger); }
+        .shift-btn:hover { transform: scale(1.02); }
         
-        @media (max-width: 768px) {
-            .admin-panel { padding: 1rem; }
-            .table-container { overflow-x: auto; }
-            table { min-width: 550px; }
-        }
-    </style>
+        /* Main Content */
+        .main-content { margin-left: 260px; min-height: 100vh; }
+        
+        /* Topbar */
+        .topbar { background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; }
+        .topbar-left { display: flex; align-items: center; gap: 1rem; }
+        .menu-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.25rem; cursor: pointer; }
+        .page-title { font-size: 1.25rem; font-weight: 700; }
+        .topbar-right { display: flex; align-items: center; gap: 1rem; }
+        .search-box { position: relative; }
+        .search-box input { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 1rem 0.6rem 2.5rem; color: var(--text); width: 250px; }
+        .search-box input:focus { outline: none; border-color: var(--primary); }
+        .search-box i { position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        .topbar-btn { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.875rem; color: var(--text); cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 0.5rem; }
+        .topbar-btn:hover { border-color: var(--primary); color: var(--primary); }
+        
+        .content { padding: 2rem; }
+</style>
 </head>
 <body>
-    <!-- Login Screen -->
     <div class="login-screen" id="loginScreen">
         <div class="login-box">
-            <h2>🔐 Вход</h2>
-            <p>Введите данные для доступа</p>
+            <div class="login-logo"><i class="fas fa-gamepad"></i></div>
+            <h2>Панель управления</h2>
+            <p>Введите данные для входа</p>
             <div class="login-error" id="loginError">Неверный логин или пароль</div>
             <form onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label>Логин</label>
-                    <input type="text" id="loginUsername" required placeholder="Введите логин">
+                    <input type="text" id="loginUsername" required placeholder="admin">
                 </div>
                 <div class="form-group">
                     <label>Пароль</label>
-                    <input type="password" id="loginPassword" required placeholder="Введите пароль">
+                    <input type="password" id="loginPassword" required placeholder="••••••••">
                 </div>
-                <button type="submit" class="login-btn">Войти</button>
+                <button type="submit" class="login-btn"><i class="fas fa-sign-in-alt"></i> Войти</button>
             </form>
         </div>
+    </div>
+
+    <div class="admin-panel" id="adminPanel">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><i class="fas fa-gamepad"></i><span>Major Gaming</span></div>
+            <ul class="sidebar-nav">
+                <li><a href="#" class="active" data-page="dashboard"><i class="fas fa-chart-pie"></i> Дашборд</a></li>
+                <li><a href="#" data-page="bookings"><i class="fas fa-calendar-check"></i> Бронирования</a></li>
+                <li><a href="#" data-page="history"><i class="fas fa-history"></i> История смен</a></li>
+                <li><a href="#" data-page="stats"><i class="fas fa-chart-bar"></i> Статистика</a></li>
+                <li><a href="index.html"><i class="fas fa-globe"></i> Открыть сайт</a></li>
+            </ul>
+            <div class="shift-status">
+                <h4>ТЕКУЩАЯ СМЕНА</h4>
+                <div class="shift-indicator">
+                    <div class="shift-dot" id="shiftDot"></div>
+                    <span id="shiftText">Не начата</span>
+                </div>
+                <button class="shift-btn start" id="shiftBtn" onclick="toggleShift()">
+                    <i class="fas fa-play"></i> Начать смену
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+                    <h1 class="page-title">Дашборд</h1>
+                </div>
+                <div class="topbar-right">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Поиск...">
+                    </div>
+                    <button class="topbar-btn" onclick="exportToCSV()"><i class="fas fa-download"></i> Экспорт</button>
+                    <button class="topbar-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+                </div>
+            </header>
+            <div class="content" id="mainContent"></div>
+        </main>
     </div>
 </body>
 </html>
 
-    <!-- Admin Panel -->
-    <div class="admin-panel" id="adminPanel">
-        <div class="container">
-            <div class="header">
-                <div class="logo">
-                    <i class="fas fa-gamepad"></i>
-                    Major Gaming
-                </div>
-                <div class="header-actions">
-                    <a href="index.html" class="btn btn-outline"><i class="fas fa-globe"></i> Сайт</a>
-                    <button class="btn btn-danger" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+<style>
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .stat-card { background: var(--bg-card); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--border); position: relative; overflow: hidden; transition: all 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .stat-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; margin-bottom: 1rem; }
+        .stat-icon.cyan { background: rgba(0, 240, 255, 0.15); color: var(--primary); }
+        .stat-icon.pink { background: rgba(255, 0, 255, 0.15); color: var(--secondary); }
+        .stat-icon.green { background: rgba(0, 255, 136, 0.15); color: var(--success); }
+        .stat-icon.yellow { background: rgba(255, 170, 0, 0.15); color: var(--warning); }
+        .stat-value { font-size: 2rem; font-weight: 800; margin-bottom: 0.25rem; }
+        .stat-label { color: var(--text-muted); font-size: 0.875rem; }
+        
+        /* Charts */
+        .charts-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        .chart-card { background: var(--bg-card); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--border); }
+        .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .chart-title { font-size: 1.1rem; font-weight: 700; }
+        .chart-tabs { display: flex; gap: 0.5rem; }
+        .chart-tab { padding: 0.4rem 0.875rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer; background: var(--bg); color: var(--text-muted); border: none; transition: all 0.3s; }
+        .chart-tab.active { background: var(--primary); color: var(--bg); }
+        .bar-chart { display: flex; align-items: flex-end; justify-content: space-between; height: 200px; padding-top: 20px; }
+        .bar-item { display: flex; flex-direction: column; align-items: center; flex: 1; max-width: 50px; }
+        .bar { width: 24px; background: var(--gradient); border-radius: 4px 4px 0 0; transition: all 0.5s; min-height: 5px; }
+        .bar-label { margin-top: 0.5rem; font-size: 0.65rem; color: var(--text-muted); }
+        .bar-value { font-size: 0.7rem; font-weight: 600; margin-bottom: 0.25rem; }
+        
+        /* Donut */
+        .donut-chart { display: flex; align-items: center; justify-content: center; gap: 2rem; }
+        .donut { width: 140px; height: 140px; border-radius: 50%; position: relative; }
+        .donut-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: var(--bg-card); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .donut-value { font-size: 1.5rem; font-weight: 800; }
+        .donut-label { font-size: 0.7rem; color: var(--text-muted); }
+        .donut-legend { display: flex; flex-direction: column; gap: 0.75rem; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; }
+        .legend-color { width: 12px; height: 12px; border-radius: 3px; }
+        
+        /* Table */
+        .table-card { background: var(--bg-card); border-radius: 16px; border: 1px solid var(--border); overflow: hidden; }
+        .table-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .table-title { font-size: 1.1rem; font-weight: 700; }
+        .table-wrapper { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 1rem 1.5rem; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: var(--bg); font-weight: 600; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; }
+        tr:hover td { background: var(--bg-card-hover); }
+        
+        .client-info { display: flex; align-items: center; gap: 0.75rem; }
+        .client-avatar { width: 36px; height: 36px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.875rem; color: var(--bg); }
+        .client-name { font-weight: 600; }
+        .client-phone { font-size: 0.8rem; color: var(--text-muted); }
+        .client-phone a { color: var(--text-muted); text-decoration: none; }
+        .client-phone a:hover { color: var(--primary); }
+        
+        .status-badge { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+        .status-badge.pending { background: rgba(255, 170, 0, 0.15); color: var(--warning); }
+        .status-badge.confirmed { background: rgba(0, 255, 136, 0.15); color: var(--success); }
+        .status-badge.cancelled { background: rgba(255, 51, 102, 0.15); color: var(--danger); }
+        .status-badge.completed { background: rgba(0, 240, 255, 0.15); color: var(--primary); }
+        
+        .tariff-badge { padding: 0.35rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+        .tariff-badge.main { background: rgba(0, 240, 255, 0.15); color: var(--primary); }
+        .tariff-badge.top { background: rgba(255, 0, 255, 0.15); color: var(--secondary); }
+        .tariff-badge.vip { background: rgba(255, 204, 0, 0.15); color: var(--accent); }
+        
+        .action-buttons { display: flex; gap: 0.5rem; }
+        .action-btn { width: 32px; height: 32px; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; font-size: 0.875rem; }
+        .action-btn.confirm { background: rgba(0, 255, 136, 0.15); color: var(--success); }
+        .action-btn.edit { background: rgba(0, 240, 255, 0.15); color: var(--primary); }
+        .action-btn.delete { background: rgba(255, 51, 102, 0.15); color: var(--danger); }
+        .action-btn:hover { transform: scale(1.1); }
+        
+        /* Delete Confirm */
+        .delete-confirm { display: flex; gap: 0.25rem; margin-left: 0.5rem; animation: fadeIn 0.2s; }
+        .delete-confirm button { width: 28px; height: 28px; border: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; transition: all 0.2s; }
+        .confirm-yes { background: var(--danger); color: white; }
+        .confirm-yes:hover { transform: scale(1.1); }
+        .confirm-no { background: var(--border); color: var(--text); }
+        .confirm-no:hover { background: var(--text-muted); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+        
+        /* Filters */
+        .filters-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .filter-select { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem 1rem; color: var(--text); cursor: pointer; }
+        .filter-select:focus { outline: none; border-color: var(--primary); }
+        
+        /* Empty State */
+        .empty-state { text-align: center; padding: 4rem 2rem; color: var(--text-muted); }
+        .empty-state i { font-size: 4rem; margin-bottom: 1rem; opacity: 0.3; }
+        .empty-state h3 { margin-bottom: 0.5rem; color: var(--text); }
+        
+        /* Shift Card */
+        .shift-card { background: var(--bg-card); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--border); margin-bottom: 1rem; }
+        .shift-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .shift-card-title { font-weight: 700; }
+        .shift-card-date { color: var(--text-muted); font-size: 0.875rem; }
+        .shift-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .shift-stat { text-align: center; padding: 1rem; background: var(--bg); border-radius: 8px; }
+        .shift-stat-value { font-size: 1.5rem; font-weight: 700; }
+        .shift-stat-label { font-size: 0.75rem; color: var(--text-muted); }
+        
+        /* Modal */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal { background: var(--bg-card); border-radius: 20px; padding: 2rem; width: 100%; max-width: 500px; border: 1px solid var(--border); transform: scale(0.9); transition: all 0.3s; }
+        .modal-overlay.active .modal { transform: scale(1); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .modal-title { font-size: 1.25rem; font-weight: 700; }
+        .modal-close { background: none; border: none; color: var(--text-muted); font-size: 1.25rem; cursor: pointer; }
+        .modal-close:hover { color: var(--danger); }
+        .modal-body .form-group { margin-bottom: 1rem; }
+        .modal-body label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-muted); }
+        .modal-body input, .modal-body select, .modal-body textarea { width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); }
+        .modal-body input:focus, .modal-body select:focus { outline: none; border-color: var(--primary); }
+        .modal-footer { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; transition: all 0.3s; }
+        .btn-primary { background: var(--gradient); color: var(--bg); }
+        .btn-primary:hover { box-shadow: var(--neon-glow); }
+        .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+        
+        /* Notification */
+        .notification { position: fixed; top: 2rem; right: 2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); transform: translateX(150%); transition: transform 0.3s; z-index: 2000; }
+        .notification.show { transform: translateX(0); }
+        .notification.success { border-left: 4px solid var(--success); }
+        .notification.error { border-left: 4px solid var(--danger); }
+        .notification-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .notification.success .notification-icon { background: rgba(0, 255, 136, 0.15); color: var(--success); }
+        .notification.error .notification-icon { background: rgba(255, 51, 102, 0.15); color: var(--danger); }
+        .notification-content h4 { font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .notification-content p { font-size: 0.8rem; color: var(--text-muted); }
+        
+        /* Responsive */
+        @media (max-width: 1200px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .charts-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); } .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; } .menu-toggle { display: block; }
+            .stats-grid { grid-template-columns: 1fr; } .search-box { display: none; }
+            .shift-stats { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+
+    <div class="notification" id="notification">
+        <div class="notification-icon"><i class="fas fa-check"></i></div>
+        <div class="notification-content"><h4>Успешно</h4><p>Действие выполнено</p></div>
+    </div>
+
+    <div class="modal-overlay" id="editModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Редактировать бронь</h3>
+                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editDocId">
+                <div class="form-group"><label>Имя</label><input type="text" id="editName"></div>
+                <div class="form-group"><label>Телефон</label><input type="text" id="editPhone"></div>
+                <div class="form-group"><label>Дата и время</label><input type="datetime-local" id="editDatetime"></div>
+                <div class="form-group"><label>Кол-во ПК</label><input type="number" id="editPcs" min="1" max="10"></div>
+                <div class="form-group"><label>Статус</label>
+                    <select id="editStatus">
+                        <option value="pending">Ожидает</option>
+                        <option value="confirmed">Подтверждено</option>
+                        <option value="completed">Завершено</option>
+                        <option value="cancelled">Отменено</option>
+                    </select>
                 </div>
             </div>
-            
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="icon purple"><i class="fas fa-calendar-check"></i></div>
-                    <div class="number" id="totalCount">0</div>
-                    <div class="label">Всего заявок</div>
-                </div>
-                <div class="stat-card">
-                    <div class="icon yellow"><i class="fas fa-clock"></i></div>
-                    <div class="number" id="pendingCount">0</div>
-                    <div class="label">Ожидают</div>
-                </div>
-                <div class="stat-card">
-                    <div class="icon green"><i class="fas fa-check-circle"></i></div>
-                    <div class="number" id="confirmedCount">0</div>
-                    <div class="label">Подтверждено</div>
-                </div>
-            </div>
-            
-            <div class="table-container">
-                <div class="table-header">
-                    <h2>Бронирования</h2>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Клиент</th>
-                            <th>Телефон</th>
-                            <th>Дата/Время</th>
-                            <th>ПК</th>
-                            <th>Тариф</th>
-                            <th>Комментарий</th>
-                            <th>Статус</th>
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bookingsTable"></tbody>
-                </table>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+                <button class="btn btn-primary" onclick="saveEdit()"><i class="fas fa-save"></i> Сохранить</button>
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
+    <div class="modal-overlay" id="shiftModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Закрыть смену</h3>
+                <button class="modal-close" onclick="closeShiftModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="shift-stats" id="shiftSummary"></div>
+                <div class="form-group" style="margin-top: 1.5rem;">
+                    <label>Комментарий к смене</label>
+                    <textarea id="shiftComment" rows="3" placeholder="Заметки о смене..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeShiftModal()">Отмена</button>
+                <button class="btn btn-primary" onclick="confirmEndShift()"><i class="fas fa-check"></i> Закрыть смену</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
     <script>
-        // Firebase конфигурация
         const firebaseConfig = {
             apiKey: "AIzaSyDVO0HWDUQfVFLHmqIE2ifIOrdxKrPDPbo",
             authDomain: "major-gaming.firebaseapp.com",
@@ -328,23 +368,37 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         
-        // Логин и пароль
         const ADMIN_LOGIN = 'admin';
         const ADMIN_PASSWORD = 'major2025';
         
-        // Проверка авторизации при загрузке
+        let allBookings = [];
+        let allShifts = [];
+        let currentShift = null;
+        let chartPeriod = 'week';
+        let unsubscribe = null;
+        
         document.addEventListener('DOMContentLoaded', function() {
             if (sessionStorage.getItem('admin_logged_in') === 'true') {
                 showAdminPanel();
             }
+            document.getElementById('searchInput').addEventListener('input', function() {
+                const page = document.querySelector('.sidebar-nav a.active').dataset.page;
+                if (page === 'bookings') renderBookingsTable(filterBookings(allBookings));
+            });
+            document.querySelectorAll('.sidebar-nav a[data-page]').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+                    this.classList.add('active');
+                    document.querySelector('.page-title').textContent = this.textContent.trim();
+                    loadPage(this.dataset.page);
+                });
+            });
         });
         
         function handleLogin(e) {
             e.preventDefault();
-            const username = document.getElementById('loginUsername').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            if (username === ADMIN_LOGIN && password === ADMIN_PASSWORD) {
+            if (document.getElementById('loginUsername').value === ADMIN_LOGIN && document.getElementById('loginPassword').value === ADMIN_PASSWORD) {
                 sessionStorage.setItem('admin_logged_in', 'true');
                 showAdminPanel();
             } else {
@@ -355,112 +409,512 @@
         function showAdminPanel() {
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('adminPanel').classList.add('active');
+            loadShiftStatus();
             loadBookings();
+            loadShifts();
+            loadPage('dashboard');
+            checkShiftReminder();
+            // Проверяем каждые 30 минут
+            setInterval(checkShiftReminder, 30 * 60 * 1000);
         }
         
-        function logout() {
-            sessionStorage.removeItem('admin_logged_in');
-            location.reload();
-        }
-        
-        var unsubscribe = null;
-        
-        function loadBookings() {
-            const tbody = document.getElementById('bookingsTable');
-            tbody.innerHTML = '<tr><td colspan="9"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Загрузка...</p></div></td></tr>';
-            
-            // Отписываемся от предыдущего listener если есть
-            if (unsubscribe) unsubscribe();
-            
-            // Realtime listener - автоматически обновляется при новых бронях
-            unsubscribe = db.collection('bookings').orderBy('id', 'desc')
-                .onSnapshot(function(snapshot) {
-                    const bookings = [];
-                    snapshot.forEach(function(doc) {
-                        bookings.push({ ...doc.data(), docId: doc.id });
-                    });
-                    renderBookings(bookings);
-                    
-                    // Звук уведомления при новой брони
-                    if (snapshot.docChanges().some(change => change.type === 'added')) {
-                        playNotificationSound();
-                    }
-                }, function(error) {
-                    console.log('Firebase error:', error);
-                    const bookings = JSON.parse(localStorage.getItem('majorgaming_bookings') || '[]');
-                    renderBookings(bookings);
-                });
-        }
-        
-        function playNotificationSound() {
-            try {
-                var audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdH2Onp+ZjHdwa3eCkqGknpF+cGtxgI+eoJuPgHRtcX6Lmp+dlYl7cW93hJOdnpqRhHhxdHuIlZudmZKGe3N1eYWSlpqYlIqAd3V4gY2VmJeUjoR7d3h9iJGVlpSRiYF6eHqBi5GUlJKPiYN8eXp+hoyRkpGPi4Z/e3p8gYmOkJCOjIiDfnt7fYSJjI6NjIqGgn17fH6EiIuMi4qIhYF+fH1+g4eJioqJh4WCf31+f4KGiImJiIaEgn9+fn+ChYeIiIeGhIKAf39/gYSGh4eGhYOBgH9/gIGEhYaGhYSDgYB/f4CBg4WFhYWEg4GAgH+AgYOEhYWEg4KBgIB/gIGCg4SEhIOCgYCAf4CAgYKDg4OCgoGAgH+AgIGCg4ODgoKBgIB/gICBgoKDg4KCgYGAf4CAgYGCgoKCgoGBgIB/gICBgYKCgoKBgYGAf4CAgIGBgoKCgYGBgIB/gICAgYGBgYGBgYGAf4CAgICBgYGBgYGBgIB/gICAgYGBgYGBgYCAf4CAgICBgYGBgYGAgH+AgICAgYGBgYGBgIB/gICAgIGBgYGBgYCAf4CAgICAgYGBgYGAgH+AgICAgIGBgYGBgIB/gICAgICBgYGBgYCAf4CAgICAgYGBgYGAgH+AgICAgICBgYGBgIB/gICAgICAgYGBgYCAf4CAgICAgIGBgYGAgH+AgICAgICBgYGBgIB/gICAgICAgYGBgYCAf4CAgICAgICBgYGAgH+AgICAgICAgYGBgIB/gICAgICAgIGBgYCAf4CAgICAgICBgYGAgH+AgICAgICAgYGBgIB/gICAgICAgIGBgYCAf4CAgICAgICAgYGAgH+AgICAgICAgIGBgIB/gICAgICAgICBgYCAf4CAgICAgICAgYGAgH+AgICAgICAgICBgIB/gICAgICAgICAgYCAf4CAgICAgICAgIGAgH+AgICAgICAgICAgIB/gICAgICAgICAgICAf4CAgICAgICAgICAgH+AgICAgICAgICAgIB/gICAgICAgICAgICAf4CAgICAgICAgICAgH+AgICAgICAgICAgIB/gICAgICAgICAgICAfw==');
-                audio.volume = 0.5;
-                audio.play();
-            } catch(e) {}
-        }
-        
-        function renderBookings(bookings) {
-            const tbody = document.getElementById('bookingsTable');
-            
-            document.getElementById('totalCount').textContent = bookings.length;
-            document.getElementById('pendingCount').textContent = bookings.filter(b => b.status === 'pending').length;
-            document.getElementById('confirmedCount').textContent = bookings.filter(b => b.status === 'confirmed').length;
-            
-            if (bookings.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="9"><div class="empty-state"><i class="fas fa-inbox"></i><p>Бронирований пока нет</p></div></td></tr>';
+        function checkShiftReminder() {
+            const saved = localStorage.getItem('currentShift');
+            if (!saved) {
+                // Смена не начата - показываем предупреждение
+                showNotification('error', 'Смена не начата!', 'Начните смену чтобы принимать брони');
                 return;
             }
+            const shift = JSON.parse(saved);
+            const startTime = new Date(shift.startTime);
+            const now = new Date();
+            const hoursElapsed = (now - startTime) / (1000 * 60 * 60);
             
-            tbody.innerHTML = bookings.map((b, index) => {
-                const date = new Date(b.datetime);
-                const formattedDate = date.toLocaleDateString('ru-RU') + ' ' + date.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
-                const statusText = { 'pending': 'Ожидает', 'confirmed': 'Подтверждено', 'cancelled': 'Отменено' };
+            if (hoursElapsed >= 12) {
+                showNotification('error', 'Пора менять смену!', 'Смена длится уже более 12 часов');
+            }
+        }
+        
+        function logout() { sessionStorage.removeItem('admin_logged_in'); location.reload(); }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+        
+        // === SHIFT SYSTEM ===
+        function loadShiftStatus() {
+            const saved = localStorage.getItem('currentShift');
+            if (saved) {
+                currentShift = JSON.parse(saved);
+                updateShiftUI(true);
+            } else {
+                updateShiftUI(false);
+            }
+        }
+        
+        function updateShiftUI(active) {
+            const dot = document.getElementById('shiftDot');
+            const text = document.getElementById('shiftText');
+            const btn = document.getElementById('shiftBtn');
+            if (active && currentShift) {
+                dot.className = 'shift-dot active';
+                const start = new Date(currentShift.startTime);
+                text.textContent = 'С ' + start.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
+                btn.className = 'shift-btn end';
+                btn.innerHTML = '<i class="fas fa-stop"></i> Закрыть смену';
+            } else {
+                dot.className = 'shift-dot inactive';
+                text.textContent = 'Не начата';
+                btn.className = 'shift-btn start';
+                btn.innerHTML = '<i class="fas fa-play"></i> Начать смену';
+            }
+        }
+        
+        function toggleShift() {
+            if (currentShift) {
+                showEndShiftModal();
+            } else {
+                startShift();
+            }
+        }
+        
+        function startShift() {
+            currentShift = {
+                id: Date.now(),
+                startTime: new Date().toISOString(),
+                bookingsAtStart: allBookings.filter(b => b.status === 'pending' || b.status === 'confirmed').length
+            };
+            localStorage.setItem('currentShift', JSON.stringify(currentShift));
+            // Сохраняем статус смены в Firebase для проверки на сайте
+            db.collection('settings').doc('shift').set({ active: true, startTime: currentShift.startTime });
+            updateShiftUI(true);
+            showNotification('success', 'Смена начата', 'Удачной работы!');
+        }
+        
+        function showEndShiftModal() {
+            const shiftBookings = allBookings.filter(b => {
+                const created = new Date(b.createdAt || b.datetime);
+                return created >= new Date(currentShift.startTime);
+            });
+            const confirmed = shiftBookings.filter(b => b.status === 'confirmed' || b.status === 'completed').length;
+            const cancelled = shiftBookings.filter(b => b.status === 'cancelled').length;
+            document.getElementById('shiftSummary').innerHTML = `
+                <div class="shift-stat"><div class="shift-stat-value">${shiftBookings.length}</div><div class="shift-stat-label">Всего броней</div></div>
+                <div class="shift-stat"><div class="shift-stat-value" style="color:var(--success)">${confirmed}</div><div class="shift-stat-label">Подтверждено</div></div>
+                <div class="shift-stat"><div class="shift-stat-value" style="color:var(--danger)">${cancelled}</div><div class="shift-stat-label">Отменено</div></div>
+
+            `;
+            document.getElementById('shiftModal').classList.add('active');
+        }
+        
+        function closeShiftModal() { document.getElementById('shiftModal').classList.remove('active'); }
+        
+        function confirmEndShift() {
+            const shiftBookings = allBookings.filter(b => {
+                const created = new Date(b.createdAt || b.datetime);
+                return created >= new Date(currentShift.startTime);
+            });
+            const shiftData = {
+                id: currentShift.id,
+                startTime: currentShift.startTime,
+                endTime: new Date().toISOString(),
+                totalBookings: shiftBookings.length,
+                confirmed: shiftBookings.filter(b => b.status === 'confirmed' || b.status === 'completed').length,
+                cancelled: shiftBookings.filter(b => b.status === 'cancelled').length,
+                comment: document.getElementById('shiftComment').value,
+                bookings: shiftBookings.map(b => ({ name: b.name, phone: b.phone, tariff: b.tariff, status: b.status, pcs: b.pcs }))
+            };
+
+            
+            db.collection('shifts').add(shiftData).then(function() {
+                // Отключаем приём броней
+                db.collection('settings').doc('shift').set({ active: false });
+                localStorage.removeItem('currentShift');
+                currentShift = null;
+                updateShiftUI(false);
+                closeShiftModal();
+                document.getElementById('shiftComment').value = '';
+                showNotification('success', 'Смена закрыта', 'Данные сохранены');
+                loadShifts();
+            });
+        }
+
+        function loadShifts() {
+            db.collection('shifts').orderBy('id', 'desc').get().then(function(snapshot) {
+                allShifts = [];
+                snapshot.forEach(function(doc) { allShifts.push({ ...doc.data(), docId: doc.id }); });
+            });
+        }
+        
+        function loadBookings() {
+            if (unsubscribe) unsubscribe();
+            unsubscribe = db.collection('bookings').orderBy('id', 'desc').onSnapshot(function(snapshot) {
+                allBookings = [];
+                snapshot.forEach(function(doc) { allBookings.push({ ...doc.data(), docId: doc.id }); });
+                const page = document.querySelector('.sidebar-nav a.active')?.dataset.page;
+                if (page === 'dashboard') { updateStats(); renderChart(); renderRecentBookings(); }
+                if (page === 'bookings') renderBookingsTable(filterBookings(allBookings));
+                if (page === 'stats') renderDetailedStats();
+            });
+        }
+        
+        function loadPage(page) {
+            const content = document.getElementById('mainContent');
+            if (page === 'dashboard') {
+                content.innerHTML = getDashboardHTML();
+                updateStats(); renderChart(); renderRecentBookings();
+            } else if (page === 'bookings') {
+                content.innerHTML = getBookingsHTML();
+                renderBookingsTable(filterBookings(allBookings));
+            } else if (page === 'history') {
+                content.innerHTML = getHistoryHTML();
+                renderShiftHistory();
+            } else if (page === 'stats') {
+                content.innerHTML = getStatsHTML();
+                renderDetailedStats();
+            }
+        }
+        
+        function getDashboardHTML() {
+            return `
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon cyan"><i class="fas fa-calendar-check"></i></div><div class="stat-value" id="totalCount">0</div><div class="stat-label">Всего бронирований</div></div>
+                    <div class="stat-card"><div class="stat-icon yellow"><i class="fas fa-clock"></i></div><div class="stat-value" id="pendingCount">0</div><div class="stat-label">Ожидают</div></div>
+                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-check-circle"></i></div><div class="stat-value" id="confirmedCount">0</div><div class="stat-label">Подтверждено</div></div>
+                    <div class="stat-card"><div class="stat-icon pink"><i class="fas fa-ban"></i></div><div class="stat-value" id="cancelledCount">0</div><div class="stat-label">Отменено</div></div>
+                </div>
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Бронирования</h3>
+                            <div class="chart-tabs">
+                                <button class="chart-tab ${chartPeriod === 'week' ? 'active' : ''}" onclick="setChartPeriod('week')">Неделя</button>
+                                <button class="chart-tab ${chartPeriod === 'month' ? 'active' : ''}" onclick="setChartPeriod('month')">Месяц</button>
+                            </div>
+                        </div>
+                        <div class="bar-chart" id="mainChart"></div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header"><h3 class="chart-title">По тарифам</h3></div>
+                        <div class="donut-chart" id="tariffChart"></div>
+                    </div>
+                </div>
+                <div class="table-card">
+                    <div class="table-header"><h3 class="table-title">Последние бронирования</h3></div>
+                    <div class="table-wrapper"><table><thead><tr><th>Клиент</th><th>Дата</th><th>ПК</th><th>Тариф</th><th>Статус</th><th>Действия</th></tr></thead><tbody id="recentBookings"></tbody></table></div>
+                </div>`;
+        }
+        
+        function getBookingsHTML() {
+            return `
+                <div class="filters-bar">
+                    <select class="filter-select" id="statusFilter" onchange="applyFilters()">
+                        <option value="all">Все статусы</option>
+                        <option value="pending">Ожидают</option>
+                        <option value="confirmed">Подтверждено</option>
+                        <option value="completed">Завершено</option>
+                        <option value="cancelled">Отменено</option>
+                    </select>
+                    <select class="filter-select" id="tariffFilter" onchange="applyFilters()">
+                        <option value="all">Все тарифы</option>
+                        <option value="main">Main</option>
+                        <option value="top">Top</option>
+                        <option value="vip">VIP</option>
+                    </select>
+                    <input type="date" class="filter-select" id="dateFilter" onchange="applyFilters()">
+                </div>
+                <div class="table-card">
+                    <div class="table-header"><h3 class="table-title">Все бронирования (<span id="bookingsCount">0</span>)</h3></div>
+                    <div class="table-wrapper"><table><thead><tr><th>#</th><th>Клиент</th><th>Дата</th><th>Часы</th><th>ПК</th><th>Тариф</th><th>Статус</th><th>Действия</th></tr></thead><tbody id="allBookingsTable"></tbody></table></div>
+                </div>`;
+        }
+        
+        function getHistoryHTML() {
+            return `
+                <div class="table-card" style="margin-bottom: 2rem;">
+                    <div class="table-header"><h3 class="table-title">История смен</h3></div>
+                </div>
+                <div id="shiftsContainer"></div>`;
+        }
+        
+        function getStatsHTML() {
+            return `
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon cyan"><i class="fas fa-users"></i></div><div class="stat-value" id="uniqueClients">0</div><div class="stat-label">Уникальных клиентов</div></div>
+                    <div class="stat-card"><div class="stat-icon green"><i class="fas fa-percentage"></i></div><div class="stat-value" id="confirmRate">0%</div><div class="stat-label">Конверсия</div></div>
+                    <div class="stat-card"><div class="stat-icon yellow"><i class="fas fa-desktop"></i></div><div class="stat-value" id="avgPcs">0</div><div class="stat-label">Среднее ПК</div></div>
+                    <div class="stat-card"><div class="stat-icon pink"><i class="fas fa-star"></i></div><div class="stat-value" id="topTariff">—</div><div class="stat-label">Популярный тариф</div></div>
+                </div>
+                <div class="charts-grid">
+                    <div class="chart-card"><div class="chart-header"><h3 class="chart-title">По часам</h3></div><div class="bar-chart" id="hoursChart"></div></div>
+                    <div class="chart-card"><div class="chart-header"><h3 class="chart-title">Всего смен: <span id="totalShifts">0</span></h3></div><div style="padding: 2rem; text-align: center; color: var(--text-muted);">Завершённых броней:<br><span style="font-size: 2rem; font-weight: 800; color: var(--success);" id="totalCompleted">0</span></div></div>
+                </div>`;
+        }
+
+        function setChartPeriod(period) {
+            chartPeriod = period;
+            document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            renderChart();
+        }
+        
+        function updateStats() {
+            const el = (id) => document.getElementById(id);
+            if (el('totalCount')) el('totalCount').textContent = allBookings.length;
+            if (el('pendingCount')) el('pendingCount').textContent = allBookings.filter(b => b.status === 'pending').length;
+            if (el('confirmedCount')) el('confirmedCount').textContent = allBookings.filter(b => b.status === 'confirmed' || b.status === 'completed').length;
+            if (el('cancelledCount')) el('cancelledCount').textContent = allBookings.filter(b => b.status === 'cancelled').length;
+        }
+        
+        function renderChart() {
+            const chart = document.getElementById('mainChart');
+            if (!chart) return;
+            
+            if (chartPeriod === 'week') {
+                const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+                const data = [0, 0, 0, 0, 0, 0, 0];
+                const now = new Date();
+                const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                allBookings.forEach(b => {
+                    const d = new Date(b.datetime || b.createdAt);
+                    if (d >= weekAgo) {
+                        const day = d.getDay();
+                        data[day === 0 ? 6 : day - 1]++;
+                    }
+                });
+                const max = Math.max(...data, 1);
+                chart.innerHTML = days.map((d, i) => `<div class="bar-item"><span class="bar-value">${data[i]}</span><div class="bar" style="height:${(data[i]/max)*150}px"></div><span class="bar-label">${d}</span></div>`).join('');
+            } else {
+                const now = new Date();
+                const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+                const data = {};
+                for (let i = 1; i <= daysInMonth; i++) data[i] = 0;
+                allBookings.forEach(b => {
+                    const d = new Date(b.datetime || b.createdAt);
+                    if (d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()) {
+                        data[d.getDate()]++;
+                    }
+                });
+                const max = Math.max(...Object.values(data), 1);
+                const step = daysInMonth > 15 ? 2 : 1;
+                let html = '';
+                for (let i = 1; i <= daysInMonth; i += step) {
+                    const val = data[i] + (step === 2 && data[i+1] ? data[i+1] : 0);
+                    html += `<div class="bar-item"><span class="bar-value">${val}</span><div class="bar" style="height:${(val/max)*150}px"></div><span class="bar-label">${i}</span></div>`;
+                }
+                chart.innerHTML = html;
+            }
+            
+            // Tariff chart
+            const tariffChart = document.getElementById('tariffChart');
+            if (tariffChart) {
+                let main = 0, top = 0, vip = 0;
+                allBookings.forEach(b => {
+                    const t = (b.tariff || '').toLowerCase();
+                    if (t.includes('vip')) vip++; else if (t.includes('top')) top++; else main++;
+                });
+                const total = main + top + vip || 1;
+                tariffChart.innerHTML = `
+                    <div class="donut" style="background: conic-gradient(var(--primary) 0deg ${main/total*360}deg, var(--secondary) ${main/total*360}deg ${(main+top)/total*360}deg, var(--accent) ${(main+top)/total*360}deg 360deg);">
+                        <div class="donut-center"><div class="donut-value">${total}</div><div class="donut-label">всего</div></div>
+                    </div>
+                    <div class="donut-legend">
+                        <div class="legend-item"><div class="legend-color" style="background:var(--primary)"></div>Main: ${main}</div>
+                        <div class="legend-item"><div class="legend-color" style="background:var(--secondary)"></div>Top: ${top}</div>
+                        <div class="legend-item"><div class="legend-color" style="background:var(--accent)"></div>VIP: ${vip}</div>
+                    </div>`;
+            }
+        }
+        
+        function renderRecentBookings() {
+            const tbody = document.getElementById('recentBookings');
+            if (!tbody) return;
+            renderBookingsRows(allBookings.slice(0, 10), tbody, false);
+        }
+        
+        function renderBookingsTable(bookings) {
+            const tbody = document.getElementById('allBookingsTable');
+            if (!tbody) return;
+            const countEl = document.getElementById('bookingsCount');
+            if (countEl) countEl.textContent = bookings.length;
+            renderBookingsRows(bookings, tbody, true);
+        }
+        
+        function renderBookingsRows(bookings, tbody, showAll) {
+            if (bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><i class="fas fa-inbox"></i><h3>Нет бронирований</h3></div></td></tr>';
+                return;
+            }
+            const statusText = { pending: 'Ожидает', confirmed: 'Подтверждено', completed: 'Завершено', cancelled: 'Отменено' };
+            tbody.innerHTML = bookings.map((b, i) => {
+                const d = new Date(b.datetime);
+                const date = d.toLocaleDateString('ru-RU') + ' ' + d.toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'});
+                const tariffClass = (b.tariff||'').toLowerCase().includes('vip') ? 'vip' : (b.tariff||'').toLowerCase().includes('top') ? 'top' : 'main';
                 const docId = b.docId || b.id;
-                const bookingNumber = bookings.length - index;
-                
                 return `<tr>
-                    <td>#${bookingNumber}</td>
-                    <td>${b.name}</td>
-                    <td><a href="tel:${b.phone}">${b.phone}</a></td>
-                    <td>${formattedDate}</td>
+                    ${showAll ? `<td>#${allBookings.length - allBookings.indexOf(b)}</td>` : ''}
+                    <td><div class="client-info"><div class="client-avatar">${(b.name||'U')[0].toUpperCase()}</div><div><div class="client-name">${b.name}</div><div class="client-phone"><a href="tel:${b.phone}">${b.phone}</a></div></div></div></td>
+                    <td>${date}</td>
+                    ${showAll ? `<td>${b.duration || 1} ч.</td>` : ''}
                     <td>${b.pcs || 1}</td>
-                    <td>${b.tariff}</td>
-                    <td>${b.comment || '—'}</td>
-                    <td><span class="status ${b.status}">${statusText[b.status] || b.status}</span></td>
-                    <td><div class="actions">
-                        ${b.status === 'pending' ? `
-                            <button class="action-btn confirm" onclick="updateStatus('${docId}', 'confirmed')" title="Подтвердить"><i class="fas fa-check"></i></button>
-                            <button class="action-btn cancel" onclick="updateStatus('${docId}', 'cancelled')" title="Отменить"><i class="fas fa-times"></i></button>
-                        ` : ''}
-                        <button class="action-btn delete" onclick="deleteBooking('${docId}')" title="Удалить"><i class="fas fa-trash"></i></button>
+                    <td><span class="tariff-badge ${tariffClass}">${tariffClass.charAt(0).toUpperCase() + tariffClass.slice(1)}</span></td>
+                    <td><span class="status-badge ${b.status}">${statusText[b.status] || b.status}</span></td>
+                    <td><div class="action-buttons">
+                        ${b.status === 'pending' ? `<button class="action-btn confirm" onclick="updateStatus('${docId}','confirmed')" title="Подтвердить"><i class="fas fa-check"></i></button>` : ''}
+                        ${b.status === 'confirmed' ? `<button class="action-btn confirm" onclick="updateStatus('${docId}','completed')" title="Завершить"><i class="fas fa-flag-checkered"></i></button>` : ''}
+                        <button class="action-btn edit" onclick="openEditModal('${docId}')" title="Редактировать"><i class="fas fa-pen"></i></button>
+                        <button class="action-btn delete" onclick="showDeleteConfirm(this, '${docId}')" title="Удалить"><i class="fas fa-trash"></i></button>
                     </div></td>
                 </tr>`;
             }).join('');
         }
+
+        function renderShiftHistory() {
+            const container = document.getElementById('shiftsContainer');
+            if (!container) return;
+            if (allShifts.length === 0) {
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-history"></i><h3>История смен пуста</h3><p>Закройте первую смену чтобы увидеть данные</p></div>';
+                return;
+            }
+            container.innerHTML = allShifts.map(s => {
+                const start = new Date(s.startTime);
+                const end = new Date(s.endTime);
+                const duration = Math.round((end - start) / (1000 * 60 * 60) * 10) / 10;
+                return `
+                    <div class="shift-card">
+                        <div class="shift-card-header">
+                            <div class="shift-card-title">Смена #${allShifts.indexOf(s) + 1}</div>
+                            <div class="shift-card-date">${start.toLocaleDateString('ru-RU')} ${start.toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'})} — ${end.toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'})}</div>
+                        </div>
+                        <div class="shift-stats">
+                            <div class="shift-stat"><div class="shift-stat-value">${duration}ч</div><div class="shift-stat-label">Длительность</div></div>
+                            <div class="shift-stat"><div class="shift-stat-value">${s.totalBookings || 0}</div><div class="shift-stat-label">Броней</div></div>
+                            <div class="shift-stat"><div class="shift-stat-value" style="color:var(--success)">${s.confirmed || 0}</div><div class="shift-stat-label">Подтверждено</div></div>
+                            <div class="shift-stat"><div class="shift-stat-value" style="color:var(--danger)">${s.cancelled || 0}</div><div class="shift-stat-label">Отменено</div></div>
+                        </div>
+                        ${s.comment ? `<p style="margin-top:1rem;color:var(--text-muted);font-size:0.875rem;"><i class="fas fa-comment"></i> ${s.comment}</p>` : ''}
+                        ${s.bookings && s.bookings.length ? `<details style="margin-top:1rem;"><summary style="cursor:pointer;color:var(--primary);">Показать брони (${s.bookings.length})</summary><ul style="margin-top:0.5rem;padding-left:1.5rem;color:var(--text-muted);font-size:0.85rem;">${s.bookings.map(b => `<li>${b.name} — ${b.phone} — ${b.tariff} — ${b.status}</li>`).join('')}</ul></details>` : ''}
+                    </div>`;
+            }).join('');
+        }
+        
+        function renderDetailedStats() {
+            const phones = new Set(allBookings.map(b => b.phone));
+            const el = (id) => document.getElementById(id);
+            if (el('uniqueClients')) el('uniqueClients').textContent = phones.size;
+            const confirmed = allBookings.filter(b => b.status === 'confirmed' || b.status === 'completed').length;
+            if (el('confirmRate')) el('confirmRate').textContent = allBookings.length ? Math.round(confirmed / allBookings.length * 100) + '%' : '0%';
+            const totalPcs = allBookings.reduce((sum, b) => sum + (parseInt(b.pcs) || 1), 0);
+            if (el('avgPcs')) el('avgPcs').textContent = allBookings.length ? (totalPcs / allBookings.length).toFixed(1) : '0';
+            let main = 0, top = 0, vip = 0;
+            allBookings.forEach(b => { const t = (b.tariff||'').toLowerCase(); if (t.includes('vip')) vip++; else if (t.includes('top')) top++; else main++; });
+            if (el('topTariff')) el('topTariff').textContent = vip >= top && vip >= main ? 'VIP' : top >= main ? 'Top' : 'Main';
+            if (el('totalShifts')) el('totalShifts').textContent = allShifts.length;
+            if (el('totalCompleted')) el('totalCompleted').textContent = allBookings.filter(b => b.status === 'completed').length;
+            
+            // Hours chart
+            const hoursChart = document.getElementById('hoursChart');
+            if (hoursChart) {
+                const hours = {};
+                for (let i = 0; i < 24; i++) hours[i] = 0;
+                allBookings.forEach(b => { const d = new Date(b.datetime); if (!isNaN(d)) hours[d.getHours()]++; });
+                const peakHours = [10, 12, 14, 16, 18, 20, 22];
+                const max = Math.max(...peakHours.map(h => hours[h]), 1);
+                hoursChart.innerHTML = peakHours.map(h => `<div class="bar-item"><span class="bar-value">${hours[h]}</span><div class="bar" style="height:${(hours[h]/max)*150}px"></div><span class="bar-label">${h}:00</span></div>`).join('');
+            }
+        }
+        
+        function filterBookings(bookings) {
+            const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
+            const status = document.getElementById('statusFilter')?.value || 'all';
+            const tariff = document.getElementById('tariffFilter')?.value || 'all';
+            const date = document.getElementById('dateFilter')?.value || '';
+            return bookings.filter(b => {
+                if (search && !b.name.toLowerCase().includes(search) && !b.phone.includes(search)) return false;
+                if (status !== 'all' && b.status !== status) return false;
+                if (tariff !== 'all' && !(b.tariff||'').toLowerCase().includes(tariff)) return false;
+                if (date && new Date(b.datetime).toISOString().split('T')[0] !== date) return false;
+                return true;
+            });
+        }
+        
+        function applyFilters() { renderBookingsTable(filterBookings(allBookings)); }
         
         function updateStatus(docId, status) {
-            db.collection('bookings').doc(docId).update({ status: status })
-                .then(function() {
-                    loadBookings();
-                })
-                .catch(function(error) {
-                    console.log('Error:', error);
-                    alert('Ошибка обновления');
-                });
+            // Проверяем начата ли смена для подтверждения/завершения
+            if ((status === 'confirmed' || status === 'completed') && !currentShift) {
+                showNotification('error', 'Смена не начата!', 'Начните смену чтобы принимать брони');
+                return;
+            }
+            db.collection('bookings').doc(docId).update({ status: status }).then(() => showNotification('success', 'Обновлено', 'Статус изменён'));
+        }
+        
+        function showDeleteConfirm(btn, docId) {
+            // Убираем предыдущие подтверждения
+            document.querySelectorAll('.delete-confirm').forEach(el => el.remove());
+            
+            // Создаём кнопки подтверждения
+            const confirm = document.createElement('div');
+            confirm.className = 'delete-confirm';
+            confirm.innerHTML = `
+                <button class="confirm-yes" onclick="deleteBooking('${docId}')"><i class="fas fa-check"></i></button>
+                <button class="confirm-no" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
+            `;
+            btn.parentElement.appendChild(confirm);
+            
+            // Автоматически убираем через 5 секунд
+            setTimeout(() => confirm.remove(), 5000);
         }
         
         function deleteBooking(docId) {
-            if (!confirm('Удалить?')) return;
-            db.collection('bookings').doc(docId).delete()
-                .then(function() {
-                    loadBookings();
-                })
-                .catch(function(error) {
-                    console.log('Error:', error);
-                    alert('Ошибка удаления');
-                });
+            document.querySelectorAll('.delete-confirm').forEach(el => el.remove());
+            db.collection('bookings').doc(docId).delete().then(() => showNotification('success', 'Удалено', 'Бронь удалена'));
         }
+        
+        function openEditModal(docId) {
+            const b = allBookings.find(x => x.docId === docId);
+            if (!b) return;
+            document.getElementById('editDocId').value = docId;
+            document.getElementById('editName').value = b.name || '';
+            document.getElementById('editPhone').value = b.phone || '';
+            document.getElementById('editDatetime').value = b.datetime || '';
+            document.getElementById('editPcs').value = b.pcs || 1;
+            document.getElementById('editStatus').value = b.status || 'pending';
+            document.getElementById('editModal').classList.add('active');
+        }
+        
+        function closeModal() { document.getElementById('editModal').classList.remove('active'); }
+        
+        function saveEdit() {
+            const docId = document.getElementById('editDocId').value;
+            db.collection('bookings').doc(docId).update({
+                name: document.getElementById('editName').value,
+                phone: document.getElementById('editPhone').value,
+                datetime: document.getElementById('editDatetime').value,
+                pcs: parseInt(document.getElementById('editPcs').value) || 1,
+                status: document.getElementById('editStatus').value
+            }).then(() => { closeModal(); showNotification('success', 'Сохранено', 'Данные обновлены'); });
+        }
+        
+        function exportToCSV() {
+            if (!allBookings.length) return showNotification('error', 'Ошибка', 'Нет данных');
+            const rows = [['ID','Имя','Телефон','Дата','Часы','ПК','Тариф','Статус'].join(';')];
+            allBookings.forEach((b, i) => rows.push([allBookings.length - i, b.name, b.phone, new Date(b.datetime).toLocaleString('ru-RU'), b.duration||1, b.pcs||1, b.tariff, b.status].join(';')));
+            const blob = new Blob(['\uFEFF' + rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'bookings_' + new Date().toISOString().split('T')[0] + '.csv';
+            link.click();
+            showNotification('success', 'Экспорт', 'Файл скачан');
+        }
+        
+        function showNotification(type, title, msg) {
+            const n = document.getElementById('notification');
+            n.className = 'notification ' + type + ' show';
+            n.querySelector('.notification-icon i').className = 'fas fa-' + (type === 'success' ? 'check' : 'times');
+            n.querySelector('h4').textContent = title;
+            n.querySelector('p').textContent = msg;
+            setTimeout(() => n.classList.remove('show'), 4000);
+        }
+        
+        function formatNumber(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
     </script>
 </body>
 </html>

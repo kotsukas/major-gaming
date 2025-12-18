@@ -11,102 +11,165 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
-    <div class="theme-toggle" onclick="toggleTheme()">
-        <i class="fas fa-moon" id="themeIcon"></i>
-    </div>
-
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="nav-logo">
-                <i class="fas fa-gamepad"></i>
-                <span>Major Gaming</span>
-            </a>
-            <div class="nav-menu" id="navMenu">
-                <a href="#home" class="nav-link">Главная</a>
-                <a href="#about" class="nav-link">О нас</a>
-                <a href="#pricing" class="nav-link">Цены</a>
-                <a href="#gallery" class="nav-link">Галерея</a>
-                <a href="#booking" class="nav-link">Бронирование</a>
-                <a href="#contact" class="nav-link">Контакты</a>
-                <a href="status.html" class="nav-link">Статус брони</a>
+            <!-- LEFT: Burger -->
+            <div class="nav-left">
+                <div class="nav-toggle" id="navToggle" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
-            <div class="nav-toggle" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
+            
+            <!-- CENTER: Logo -->
+            <a href="#" class="nav-logo">
+                <span class="logo-icon">🎮</span>
+                <span class="logo-text">MAJOR<span class="logo-accent">GAMING</span></span>
+            </a>
+            
+            <!-- RIGHT: Language Dropdown -->
+            <div class="nav-right">
+                <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-toggle" onclick="toggleLangDropdown()">
+                        <span id="langText">RU</span>
+                        <i class="fas fa-chevron-up" id="langArrow"></i>
+                    </div>
+                    <div class="lang-menu" id="langMenu">
+                        <div class="lang-option" data-lang="uz" onclick="selectLang(this.dataset.lang)">UZ</div>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
+    
+    <!-- Полноэкранное меню -->
+    <div class="fullscreen-menu" id="navMenu">
+        <button class="menu-close-btn" onclick="toggleMenu()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="menu-content">
+            <a href="#home" class="menu-link active-link" data-lang-key="nav_home" onclick="toggleMenu()">Главная</a>
+            <a href="#games" class="menu-link" data-lang-key="nav_games" onclick="toggleMenu()">Игры</a>
+            <a href="#about" class="menu-link" data-lang-key="nav_about" onclick="toggleMenu()">О нас</a>
+            <a href="#pricing" class="menu-link" data-lang-key="nav_pricing" onclick="toggleMenu()">Цены</a>
+            <a href="#gallery" class="menu-link" data-lang-key="nav_gallery" onclick="toggleMenu()">Галерея</a>
+            <a href="#booking" class="menu-link" data-lang-key="nav_booking" onclick="toggleMenu()">Бронирование</a>
+            <a href="#contact" class="menu-link" data-lang-key="nav_contact" onclick="toggleMenu()">Контакты</a>
+            <a href="#referral" class="menu-link" data-lang-key="nav_bonus" onclick="toggleMenu()">Бонусы</a>
+            <a href="status.html" class="menu-link" data-lang-key="nav_status" onclick="toggleMenu()">Статус брони</a>
+        </div>
+        </div>
+    </div>
+    <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
 
-    <section class="hero" id="home">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <div class="hero-badge">🎮 Лучший клуб в Намангане</div>
-            <h1>Major Gaming</h1>
-            <p>Современный компьютерный клуб с мощными ПК, комфортной атмосферой и турнирами</p>
-            <div class="hero-buttons">
-                <a href="#booking" class="btn btn-primary">
-                    <i class="fas fa-calendar-check"></i> Забронировать
+    <section class="hero-colizeum" id="home">
+        <!-- Огромный текст на фоне -->
+        <div class="hero-big-text">
+            <span class="big-text-major">MAJOR</span>
+            <span class="big-text-gaming">GAMING</span>
+        </div>
+        
+        <!-- Контент по центру -->
+        <div class="hero-center-content">
+            <div class="hero-info-box">
+                <p class="hero-subtitle" data-lang-key="hero_subtitle">ЛУЧШИЙ КИБЕРСПОРТИВНЫЙ</p>
+                <p class="hero-subtitle-accent" data-lang-key="hero_subtitle_accent">КЛУБ В НАМАНГАНЕ</p>
+                <a href="#booking" class="hero-cta">
+                    <span data-lang-key="hero_cta">ЗАБРОНИРОВАТЬ</span> <i class="fas fa-arrow-right"></i>
                 </a>
-                <a href="#about" class="btn btn-outline">
-                    <i class="fas fa-info-circle"></i> Узнать больше
-                </a>
-            </div>
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <span class="stat-num">50+</span>
-                    <span class="stat-text">Мощных ПК</span>
-                </div>
-                <div class="hero-stat">
-                    <span class="stat-num">24/7</span>
-                    <span class="stat-text">Работаем</span>
-                </div>
-                <div class="hero-stat">
-                    <span class="stat-num">5000+</span>
-                    <span class="stat-text">Клиентов</span>
-                </div>
             </div>
         </div>
-        <div class="hero-scroll">
-            <a href="#about"><i class="fas fa-chevron-down"></i></a>
+        
+        <!-- Текст внизу -->
+        <div class="hero-bottom-text">
+            <span class="bottom-text-item" data-lang-key="hero_bottom_1">ИГРА</span>
+            <span class="bottom-text-item" data-lang-key="hero_bottom_2">НАЧИНАЕТСЯ</span>
+            <span class="bottom-text-item" data-lang-key="hero_bottom_3">ЗДЕСЬ</span>
         </div>
     </section>
 
-    <section class="section about" id="about">
+    <!-- Секция игр -->
+    <section class="section games" id="games">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">О клубе</span>
-                <h2>Почему выбирают нас?</h2>
-                <p>Major Gaming — это не просто компьютерный клуб, это место где рождаются чемпионы</p>
+                <span class="section-badge" data-lang-key="games_badge">Игры</span>
+                <h2 data-lang-key="games_title">Популярные игры</h2>
+                <p data-lang-key="games_desc">Все топовые игры уже установлены и готовы к запуску</p>
+            </div>
+            <div class="games-grid">
+                <div class="game-card scroll-animate delay-1">
+                    <div class="game-icon">🎯</div>
+                    <span>CS 2</span>
+                </div>
+                <div class="game-card scroll-animate delay-2">
+                    <div class="game-icon">🏆</div>
+                    <span>Dota 2</span>
+                </div>
+                <div class="game-card scroll-animate delay-3">
+                    <div class="game-icon">🔫</div>
+                    <span>Valorant</span>
+                </div>
+                <div class="game-card scroll-animate delay-4">
+                    <div class="game-icon">⚽</div>
+                    <span>FC 24</span>
+                </div>
+                <div class="game-card scroll-animate delay-5">
+                    <div class="game-icon">🎮</div>
+                    <span>GTA V</span>
+                </div>
+                <div class="game-card scroll-animate delay-6">
+                    <div class="game-icon">🏎️</div>
+                    <span>Forza 5</span>
+                </div>
+                <div class="game-card scroll-animate delay-1">
+                    <div class="game-icon">🐉</div>
+                    <span>LoL</span>
+                </div>
+                <div class="game-card scroll-animate delay-2">
+                    <div class="game-icon">🔥</div>
+                    <span>PUBG</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section about gaming-bg" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-lang-key="about_badge">О клубе</span>
+                <h2 data-lang-key="about_title">Почему выбирают нас?</h2>
+                <p data-lang-key="about_desc">Major Gaming — это не просто компьютерный клуб, это место где рождаются чемпионы</p>
             </div>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card scroll-animate animate-left delay-1">
                     <div class="feature-icon"><i class="fas fa-microchip"></i></div>
-                    <h3>Мощное железо</h3>
-                    <p>RTX 4080, Intel i9, 32GB RAM — играй на максималках без лагов</p>
+                    <h3 data-lang-key="feat1_title">Мощное железо</h3>
+                    <p data-lang-key="feat1_desc">RTX 4080, Intel i9, 32GB RAM — играй на максималках без лагов</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card scroll-animate delay-1">
                     <div class="feature-icon"><i class="fas fa-desktop"></i></div>
-                    <h3>240Hz мониторы</h3>
-                    <p>Плавная картинка для киберспорта и комфортной игры</p>
+                    <h3 data-lang-key="feat2_title">240Hz мониторы</h3>
+                    <p data-lang-key="feat2_desc">Плавная картинка для киберспорта и комфортной игры</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card scroll-animate animate-right delay-1">
                     <div class="feature-icon"><i class="fas fa-headset"></i></div>
-                    <h3>Про периферия</h3>
-                    <p>HyperX, Logitech, SteelSeries — только лучшее оборудование</p>
+                    <h3 data-lang-key="feat3_title">Про периферия</h3>
+                    <p data-lang-key="feat3_desc">HyperX, Logitech, SteelSeries — только лучшее оборудование</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card scroll-animate animate-left delay-2">
                     <div class="feature-icon"><i class="fas fa-wifi"></i></div>
-                    <h3>Быстрый интернет</h3>
-                    <p>1 Гбит/с — минимальный пинг в любых онлайн играх</p>
+                    <h3 data-lang-key="feat4_title">Быстрый интернет</h3>
+                    <p data-lang-key="feat4_desc">1 Гбит/с — минимальный пинг в любых онлайн играх</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card scroll-animate delay-2">
                     <div class="feature-icon"><i class="fas fa-couch"></i></div>
-                    <h3>VIP зона</h3>
-                    <p>Отдельные комнаты для команд и стримеров</p>
+                    <h3 data-lang-key="feat5_title">VIP зона</h3>
+                    <p data-lang-key="feat5_desc">Отдельные комнаты для команд и стримеров</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card scroll-animate animate-right delay-2">
                     <div class="feature-icon"><i class="fas fa-coffee"></i></div>
-                    <h3>Кафе-бар</h3>
-                    <p>Напитки, снеки и горячая еда прямо в клубе</p>
+                    <h3 data-lang-key="feat6_title">Кафе-бар</h3>
+                    <p data-lang-key="feat6_desc">Напитки, снеки и горячая еда прямо в клубе</p>
                 </div>
             </div>
         </div>
@@ -115,12 +178,12 @@
     <section class="section pricing" id="pricing">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">Тарифы</span>
-                <h2>Наши цены</h2>
-                <p>Выберите подходящий тариф для игры</p>
+                <span class="section-badge" data-lang-key="pricing_badge">Тарифы</span>
+                <h2 data-lang-key="pricing_title">Наши цены</h2>
+                <p data-lang-key="pricing_desc">Выберите подходящий тариф для игры</p>
             </div>
             <div class="pricing-grid">
-                <div class="price-card" data-tariff="main" onclick="selectPriceCard('main')">
+                <div class="price-card scroll-animate delay-1" data-tariff="main" onclick="selectPriceCard('main')">
                     <div class="price-card-check"><i class="fas fa-check"></i></div>
                     <div class="price-header">
                         <h3>Main</h3>
@@ -139,7 +202,7 @@
                     </ul>
                     <a href="#booking" class="btn btn-outline btn-block price-btn">Забронировать</a>
                 </div>
-                <div class="price-card" data-tariff="top" onclick="selectPriceCard('top')">
+                <div class="price-card scroll-animate delay-2" data-tariff="top" onclick="selectPriceCard('top')">
                     <div class="price-card-check"><i class="fas fa-check"></i></div>
                     <div class="price-badge">🔥 Популярный</div>
                     <div class="price-header">
@@ -159,7 +222,7 @@
                     </ul>
                     <a href="#booking" class="btn btn-outline btn-block price-btn">Забронировать</a>
                 </div>
-                <div class="price-card" data-tariff="vip" onclick="selectPriceCard('vip')">
+                <div class="price-card scroll-animate delay-3" data-tariff="vip" onclick="selectPriceCard('vip')">
                     <div class="price-card-check"><i class="fas fa-check"></i></div>
                     <div class="price-header">
                         <h3>VIP</h3>
@@ -180,64 +243,64 @@
                 </div>
             </div>
             <div class="packages">
-                <h3><i class="fas fa-gift"></i> Выгодные пакеты <span id="packageTariffName"></span></h3>
+                <h3><i class="fas fa-gift"></i> <span data-lang-key="packages_title">Выгодные пакеты</span> <span id="packageTariffName"></span></h3>
                 <div class="packages-grid">
                     <div class="package-card">
-                        <span class="package-hours">3 часа</span>
+                        <span class="package-hours" data-lang-key="pkg_3h">3 часа</span>
                         <span class="package-price" id="package3h">62 000 сум</span>
                         <span class="package-save" id="package3hSave">Экономия 7 000</span>
                     </div>
                     <div class="package-card">
-                        <span class="package-hours">5 часов</span>
+                        <span class="package-hours" data-lang-key="pkg_5h">5 часов</span>
                         <span class="package-price" id="package5h">100 000 сум</span>
                         <span class="package-save" id="package5hSave">Экономия 15 000</span>
                     </div>
                     <div class="package-card">
-                        <span class="package-hours">Ночь (22:00-08:00)</span>
+                        <span class="package-hours" data-lang-key="pkg_night">Ночь (22:00-08:00)</span>
                         <span class="package-price" id="packageNight">180 000 сум</span>
-                        <span class="package-save">10 часов игры!</span>
+                        <span class="package-save" data-lang-key="pkg_night_hours">10 часов игры!</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section gallery" id="gallery">
+    <section class="section gallery gaming-bg" id="gallery">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">Галерея</span>
-                <h2>Наш клуб</h2>
-                <p>Посмотрите как выглядит Major Gaming изнутри</p>
+                <span class="section-badge" data-lang-key="gallery_badge">Галерея</span>
+                <h2 data-lang-key="gallery_title">Наш клуб</h2>
+                <p data-lang-key="gallery_desc">Посмотрите как выглядит Major Gaming изнутри</p>
             </div>
             <div class="gallery-grid">
-                <div class="gallery-item large">
+                <div class="gallery-item large scroll-animate animate-scale delay-1">
                     <div class="gallery-placeholder">
                         <i class="fas fa-desktop"></i>
-                        <span>Игровой зал</span>
+                        <span data-lang-key="gal_hall">Игровой зал</span>
                     </div>
                 </div>
-                <div class="gallery-item">
+                <div class="gallery-item scroll-animate animate-scale delay-2">
                     <div class="gallery-placeholder">
                         <i class="fas fa-couch"></i>
-                        <span>VIP комната</span>
+                        <span data-lang-key="gal_vip">VIP комната</span>
                     </div>
                 </div>
-                <div class="gallery-item">
+                <div class="gallery-item scroll-animate animate-scale delay-3">
                     <div class="gallery-placeholder">
                         <i class="fas fa-coffee"></i>
-                        <span>Кафе-бар</span>
+                        <span data-lang-key="gal_cafe">Кафе-бар</span>
                     </div>
                 </div>
-                <div class="gallery-item">
+                <div class="gallery-item scroll-animate animate-scale delay-4">
                     <div class="gallery-placeholder">
                         <i class="fas fa-trophy"></i>
-                        <span>Турниры</span>
+                        <span data-lang-key="gal_tournaments">Турниры</span>
                     </div>
                 </div>
-                <div class="gallery-item">
+                <div class="gallery-item scroll-animate animate-scale delay-5">
                     <div class="gallery-placeholder">
                         <i class="fas fa-headset"></i>
-                        <span>Периферия</span>
+                        <span data-lang-key="gal_periphery">Периферия</span>
                     </div>
                 </div>
             </div>
@@ -247,21 +310,25 @@
     <section class="section booking" id="booking">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">Бронирование</span>
-                <h2>Забронируйте место</h2>
-                <p>Заполните форму и мы свяжемся с вами для подтверждения</p>
+                <span class="section-badge" data-lang-key="booking_badge">Бронирование</span>
+                <h2 data-lang-key="booking_title">Забронируйте место</h2>
+                <p data-lang-key="booking_desc">Заполните форму и мы свяжемся с вами для подтверждения</p>
             </div>
             <div class="booking-container">
                 <div class="booking-info">
-                    <h3><i class="fas fa-info-circle"></i> Информация</h3>
+                    <h3><i class="fas fa-info-circle"></i> <span data-lang-key="info_title">Информация</span></h3>
                     <ul>
-                        <li><i class="fas fa-clock"></i> Работаем 24/7</li>
-                        <li><i class="fas fa-calendar"></i> Бронь за 30 минут до визита</li>
-                        <li><i class="fas fa-phone"></i> Подтверждение по телефону</li>
-                        <li><i class="fas fa-percent"></i> Скидка 10% при онлайн-брони</li>
+                        <li><i class="fas fa-clock"></i> <span data-lang-key="info_247">Работаем 24/7 без выходных</span></li>
+                        <li><i class="fas fa-calendar"></i> <span data-lang-key="info_30min">Бронь за 30 минут до визита</span></li>
+                        <li><i class="fas fa-phone"></i> <span data-lang-key="info_confirm">Подтверждение по телефону</span></li>
+                        <li><i class="fas fa-gift"></i> <span>Пакеты от 3 часов — выгоднее!</span></li>
+                        <li><i class="fas fa-gamepad"></i> <span>50+ мощных ПК с RTX 4080</span></li>
+                        <li><i class="fas fa-headset"></i> <span>Про периферия: HyperX, Logitech</span></li>
+                        <li><i class="fas fa-wifi"></i> <span>Интернет 1 Гбит/с — минимальный пинг</span></li>
+                        <li><i class="fas fa-coffee"></i> <span>Кафе-бар прямо в клубе</span></li>
                     </ul>
                     <div class="booking-contact">
-                        <p>Или позвоните нам:</p>
+                        <p data-lang-key="info_call">Или позвоните нам:</p>
                         <a href="tel:+998901234567" class="phone-link">
                             <i class="fas fa-phone"></i> +998 90 123 45 67
                         </a>
@@ -269,48 +336,48 @@
                 </div>
                 <form class="booking-form" id="bookingForm">
                     <div class="form-group">
-                        <label><i class="fas fa-user"></i> Ваше имя</label>
-                        <input type="text" name="name" id="nameInput" required placeholder="Введите имя">
+                        <label><i class="fas fa-user"></i> <span data-lang-key="form_name">Ваше имя</span></label>
+                        <input type="text" name="name" id="nameInput" required placeholder="Введите имя" data-lang-key-placeholder="form_name_ph">
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-phone"></i> Телефон</label>
+                        <label><i class="fas fa-phone"></i> <span data-lang-key="form_phone">Телефон</span></label>
                         <input type="tel" name="phone" id="phoneInput" required placeholder="+998 XX XXX XX XX">
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label><i class="fas fa-calendar"></i> Дата и время</label>
+                            <label><i class="fas fa-calendar"></i> <span data-lang-key="form_datetime">Дата и время</span></label>
                             <input type="datetime-local" name="datetime" id="datetimeInput" required>
                         </div>
                         <div class="form-group">
-                            <label><i class="fas fa-desktop"></i> Кол-во ПК</label>
+                            <label><i class="fas fa-desktop"></i> <span data-lang-key="form_pcs">Кол-во ПК</span></label>
                             <select name="pcs" id="pcsSelect">
-                                <option value="1" selected>1 компьютер</option>
-                                <option value="2">2 компьютера</option>
-                                <option value="3">3 компьютера</option>
-                                <option value="4">4 компьютера</option>
-                                <option value="5">5 компьютеров</option>
-                                <option value="6">6 компьютеров</option>
-                                <option value="7">7 компьютеров</option>
-                                <option value="8">8 компьютеров</option>
-                                <option value="9">9 компьютеров</option>
-                                <option value="10">10 компьютеров</option>
+                                <option value="1" selected data-lang-key="pc_1">1 компьютер</option>
+                                <option value="2" data-lang-key="pc_2">2 компьютера</option>
+                                <option value="3" data-lang-key="pc_3">3 компьютера</option>
+                                <option value="4" data-lang-key="pc_4">4 компьютера</option>
+                                <option value="5" data-lang-key="pc_5">5 компьютеров</option>
+                                <option value="6" data-lang-key="pc_6">6 компьютеров</option>
+                                <option value="7" data-lang-key="pc_7">7 компьютеров</option>
+                                <option value="8" data-lang-key="pc_8">8 компьютеров</option>
+                                <option value="9" data-lang-key="pc_9">9 компьютеров</option>
+                                <option value="10" data-lang-key="pc_10">10 компьютеров</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label><i class="fas fa-hourglass-half"></i> Длительность</label>
+                            <label><i class="fas fa-hourglass-half"></i> <span data-lang-key="form_duration">Длительность</span></label>
                             <select name="duration" id="durationSelect">
-                                <option value="1">1 час</option>
-                                <option value="2">2 часа</option>
-                                <option value="3" selected>3 часа (пакет)</option>
-                                <option value="5">5 часов (пакет)</option>
-                                <option value="10">Ночь (10 часов)</option>
+                                <option value="1" data-lang-key="dur_1">1 час</option>
+                                <option value="2" data-lang-key="dur_2">2 часа</option>
+                                <option value="3" selected data-lang-key="dur_3">3 часа (пакет)</option>
+                                <option value="5" data-lang-key="dur_5">5 часов (пакет)</option>
+                                <option value="10" data-lang-key="dur_10">Ночь (10 часов)</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-layer-group"></i> Выберите тариф</label>
+                        <label><i class="fas fa-layer-group"></i> <span data-lang-key="form_tariff">Выберите тариф</span></label>
                         <input type="hidden" name="tariff" id="tariffInput" value="">
                         <div class="tariff-selector">
                             <div class="tariff-option" data-value="main" onclick="chooseTariff('main')">
@@ -333,81 +400,77 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-comment"></i> Комментарий (необязательно)</label>
-                        <textarea name="comment" id="commentInput" placeholder="Особые пожелания..."></textarea>
+                        <label><i class="fas fa-comment"></i> <span data-lang-key="form_comment">Комментарий (необязательно)</span></label>
+                        <textarea name="comment" id="commentInput" placeholder="Особые пожелания..." data-lang-key-placeholder="form_comment_ph"></textarea>
                     </div>
                     
                     <!-- Итоговая сумма -->
                     <div class="total-price-box" id="totalPriceBox">
                         <div class="total-price-row">
-                            <span class="total-label">Тариф:</span>
+                            <span class="total-label" data-lang-key="total_tariff">Тариф:</span>
                             <span class="total-value" id="totalTariff">—</span>
                         </div>
                         <div class="total-price-row">
-                            <span class="total-label">Компьютеров:</span>
+                            <span class="total-label" data-lang-key="total_pcs">Компьютеров:</span>
                             <span class="total-value" id="totalPcs">1 ПК</span>
                         </div>
                         <div class="total-price-row">
-                            <span class="total-label">Длительность:</span>
+                            <span class="total-label" data-lang-key="total_duration">Длительность:</span>
                             <span class="total-value" id="totalDuration">3 часа</span>
                         </div>
                         <div class="total-price-row total-main">
-                            <span class="total-label">💰 Итого:</span>
+                            <span class="total-label">💰 <span data-lang-key="total_sum">Итого:</span></span>
                             <span class="total-value total-amount" id="totalAmount">— сум</span>
                         </div>
                         <div class="total-discount" id="totalDiscount"></div>
                     </div>
                     
                     <button type="submit" class="btn btn-primary btn-block btn-lg">
-                        <i class="fas fa-paper-plane"></i> Отправить заявку
+                        <i class="fas fa-paper-plane"></i> <span data-lang-key="form_submit">Отправить заявку</span>
                     </button>
                 </form>
             </div>
         </div>
     </section>
 
-    <section class="section contact" id="contact">
+    <section class="section contact gaming-bg" id="contact">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">Контакты</span>
-                <h2>Как нас найти</h2>
-                <p>Приходите к нам в гости!</p>
+                <span class="section-badge" data-lang-key="contact_badge">Контакты</span>
+                <h2 data-lang-key="contact_title">Как нас найти</h2>
+                <p data-lang-key="contact_desc">Приходите к нам в гости!</p>
             </div>
             <div class="contact-grid">
                 <div class="contact-info">
-                    <div class="contact-card">
+                    <div class="contact-card scroll-animate delay-1">
                         <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                         <div class="contact-text">
-                            <h4>Адрес</h4>
-                            <p>г. Наманган, ул. Центральная, 12</p>
+                            <h4 data-lang-key="c_address">Адрес</h4>
+                            <p data-lang-key="c_address_val">г. Наманган, ул. Галаба, 64</p>
+                            <p class="contact-detail">Ориентир: махаллинский сход граждан, рядом с базаром</p>
                         </div>
                     </div>
-                    <div class="contact-card">
+                    <div class="contact-card scroll-animate delay-2">
                         <div class="contact-icon"><i class="fas fa-phone"></i></div>
                         <div class="contact-text">
-                            <h4>Телефон</h4>
+                            <h4 data-lang-key="c_phone">Телефон</h4>
                             <a href="tel:+998901234567">+998 90 123 45 67</a>
+                            <p class="contact-detail">Звоните в любое время — мы всегда на связи!</p>
                         </div>
                     </div>
-                    <div class="contact-card">
+                    <div class="contact-card scroll-animate delay-3">
                         <div class="contact-icon"><i class="fas fa-clock"></i></div>
                         <div class="contact-text">
-                            <h4>Режим работы</h4>
-                            <p>Круглосуточно, 24/7</p>
-                        </div>
-                    </div>
-                    <div class="contact-card">
-                        <div class="contact-icon"><i class="fab fa-telegram"></i></div>
-                        <div class="contact-text">
-                            <h4>Telegram</h4>
-                            <a href="https://t.me/cyberzone_namangan" target="_blank">@cyberzone_namangan</a>
+                            <h4 data-lang-key="c_hours">Режим работы</h4>
+                            <p data-lang-key="c_hours_val">Круглосуточно, 24/7</p>
+                            <p class="contact-detail">Работаем без выходных и праздников</p>
                         </div>
                     </div>
                     <div class="social-buttons">
-                        <a href="https://t.me/cyberzone_namangan" target="_blank" class="social-btn telegram">
+                        <a href="https://t.me/majorgaming_uz" target="_blank" class="social-btn telegram">
                             <i class="fab fa-telegram"></i> Telegram
                         </a>
-                        <a href="https://instagram.com/cyberzone_namangan" target="_blank" class="social-btn instagram">
+                        <a href="https://www.instagram.com/majorgaming.uz?igsh=bzF0c3phZ3Q4cDc0" target="_blank" class="social-btn instagram">
                             <i class="fab fa-instagram"></i> Instagram
                         </a>
                     </div>
@@ -415,6 +478,44 @@
                 <div class="contact-map">
                     <div id="map"></div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Реферальная программа -->
+    <section class="section referral" id="referral">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-lang-key="referral_badge">Реферальная программа</span>
+                <h2 data-lang-key="referral_title">Приведи друга — получи бонус!</h2>
+                <p data-lang-key="referral_desc">Делитесь кодом с друзьями и получайте скидки</p>
+            </div>
+            <div class="referral-container">
+                <div class="referral-card scroll-animate animate-left delay-1">
+                    <div class="referral-icon"><i class="fas fa-share-alt"></i></div>
+                    <h3 data-lang-key="ref_step1_title">1. Поделитесь кодом</h3>
+                    <p data-lang-key="ref_step1_desc">Отправьте свой реферальный код другу</p>
+                </div>
+                <div class="referral-card scroll-animate delay-2">
+                    <div class="referral-icon"><i class="fas fa-user-plus"></i></div>
+                    <h3 data-lang-key="ref_step2_title">2. Друг приходит</h3>
+                    <p data-lang-key="ref_step2_desc">Друг называет код при первом визите</p>
+                </div>
+                <div class="referral-card scroll-animate animate-right delay-3">
+                    <div class="referral-icon"><i class="fas fa-gift"></i></div>
+                    <h3 data-lang-key="ref_step3_title">3. Оба получают бонус</h3>
+                    <p data-lang-key="ref_step3_desc">Вы — 1 час бесплатно, друг — скидка 20%</p>
+                </div>
+            </div>
+            <div class="referral-code-box">
+                <p data-lang-key="your_code">Ваш реферальный код:</p>
+                <div class="referral-code" id="referralCode">MAJOR-XXXXX</div>
+                <button class="btn btn-primary" onclick="generateReferralCode()">
+                    <i class="fas fa-sync-alt"></i> <span data-lang-key="generate_code">Получить код</span>
+                </button>
+                <button class="btn btn-outline" onclick="copyReferralCode()">
+                    <i class="fas fa-copy"></i> <span data-lang-key="copy_code">Скопировать</span>
+                </button>
             </div>
         </div>
     </section>
@@ -427,30 +528,62 @@
                         <i class="fas fa-gamepad"></i>
                         <span>Major Gaming</span>
                     </div>
-                    <p>Лучший игровой клуб в Намангане. Мощные ПК, комфортная атмосфера, честные цены.</p>
+                    <p data-lang-key="footer_desc">Лучший игровой клуб в Намангане. Мощные ПК, комфортная атмосфера, честные цены.</p>
                 </div>
                 <div class="footer-links">
-                    <h4>Навигация</h4>
-                    <a href="#home">Главная</a>
-                    <a href="#about">О нас</a>
-                    <a href="#pricing">Цены</a>
-                    <a href="#booking">Бронирование</a>
-
+                    <h4 data-lang-key="footer_nav">Навигация</h4>
+                    <a href="#home" data-lang-key="nav_home">Главная</a>
+                    <a href="#about" data-lang-key="nav_about">О нас</a>
+                    <a href="#pricing" data-lang-key="nav_pricing">Цены</a>
+                    <a href="#booking" data-lang-key="nav_booking">Бронирование</a>
                 </div>
                 <div class="footer-links">
-                    <h4>Контакты</h4>
+                    <h4 data-lang-key="footer_contacts">Контакты</h4>
                     <a href="tel:+998901234567"><i class="fas fa-phone"></i> +998 90 123 45 67</a>
-                    <a href="mailto:info@cyberzone.uz"><i class="fas fa-envelope"></i> info@cyberzone.uz</a>
-                    <a href="#contact"><i class="fas fa-map-marker-alt"></i> ул. Центральная, 12</a>
+                    <a href="mailto:info@majorgaming.uz"><i class="fas fa-envelope"></i> info@majorgaming.uz</a>
+                    <a href="#contact"><i class="fas fa-map-marker-alt"></i> <span data-lang-key="footer_address">ул. Галаба, 64</span></a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Major Gaming. Все права защищены.</p>
+                <p data-lang-key="footer_copy">&copy; 2025 Major Gaming. Все права защищены.</p>
             </div>
         </div>
     </footer>
 
     <div class="toast" id="toast"></div>
+
+    <!-- Чат-бот -->
+    <div class="chatbot-toggle" onclick="toggleChatbot()">
+        <i class="fas fa-comments"></i>
+        <span class="chatbot-badge">1</span>
+    </div>
+    
+    <div class="chatbot" id="chatbot">
+        <div class="chatbot-header">
+            <div class="chatbot-avatar"><i class="fas fa-robot"></i></div>
+            <div class="chatbot-info">
+                <h4>Major Bot</h4>
+                <span data-lang-key="bot_online">Онлайн</span>
+            </div>
+            <button class="chatbot-close" onclick="toggleChatbot()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="chat-message bot">
+                <span data-lang-key="bot_greeting">Привет! 👋 Я бот Major Gaming. Чем могу помочь?</span>
+            </div>
+        </div>
+        <div class="chatbot-quick">
+            <button onclick="askBot('prices')" data-lang-key="q_prices">💰 Цены</button>
+            <button onclick="askBot('hours')" data-lang-key="q_hours">🕐 Часы работы</button>
+            <button onclick="askBot('address')" data-lang-key="q_address">📍 Адрес</button>
+            <button onclick="askBot('booking')" data-lang-key="q_booking">📅 Бронь</button>
+            <button onclick="askBot('specs')" data-lang-key="q_specs">🖥 Характеристики</button>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Напишите сообщение..." data-lang-key-placeholder="chat_placeholder" onkeypress="handleChatKey(event)">
+            <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
     
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
